@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Consultorio_Medico.BL.DTOs.UserSchedule.UserScheduleSearchOutputDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2><center>Horario Usuario</center></h2>
+<div>
+    <p style="padding: 20px;">
+        <a asp-action="Create" class="btn btn-info">Crear horario usuario</a>
+    </p>
+</div>
+<table class="table">
+    <thead>
+        <tr>         
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Schedule)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.UserSchedulesId  }, new {@class="btn btn-warning" }) |
+                    @Html.ActionLink("Details", "Details", new {  id=item.UserSchedulesId }, new {@class="btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.UserSchedulesId},new {@class="btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

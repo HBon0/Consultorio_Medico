@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Consultorio_Medico.BL.DTOs.ScheduleDTO.ScheduleSearchOutPutDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2><center>Schedules</center></h2>
+<div>
+    <p style="padding: 20px;">
+        <a asp-action="Create" class="btn btn-info">Crear Schedule</a>
+    </p>
+</div>
+<table class="table">
+    <thead>
+        <tr>          
+            <th>
+                @Html.DisplayNameFor(model => model.DayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartOfShift)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndOfShift)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartOfShift)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndOfShift)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { Id=item.SchedulesId},new {@class="btn btn-warning" }) |
+                    @Html.ActionLink("Details", "Details", new { Id=item.SchedulesId },new {@class="btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { Id=item.SchedulesId  },new {@class="btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

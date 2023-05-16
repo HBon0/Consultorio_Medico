@@ -1,0 +1,43 @@
+﻿@model Consultorio_Medico.BL.DTOs.WorkPlaceDTO.GetWorkPlaceByIdDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div>
+    <h3><center>Eliminar Lugar de Trabajo</center></h3>
+    <hr />
+    <h4><center>¿Estás seguro de que quieres eliminar esto?</center></h4>
+    
+    
+<div class="container" style="padding: 50px 10px 10px 10px">
+    <div class="">
+        <div class="row d-flex justify-content-center align-items-center">
+                
+                <div class="col-md-4">
+                    <div class="">
+                        <input type="number" name="Id" value=@Model.WorkPlacesId hidden />
+                    </div>
+                    <div class="">
+                        <label asp-for="WorkPlacesId" hidden></label>
+                        <input asp-for="WorkPlacesId" hidden />
+                    </div>
+                    <div class="">
+                        <label asp-for="WorkPlaces" class="control-label" disabled></label>
+                        <input asp-for="WorkPlaces" class="form-control" disabled/>
+                        <span asp-validation-for="WorkPlaces" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <form asp-action="Delete">
+                        <input type="number" value=@Model.WorkPlacesId name="Id" hidden />
+                        <input type="submit" value="Delete" class="btn btn-danger" /> ||
+                        <a asp-action="Index" class="btn btn-info">Regresar a lista</a>
+                    </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    
+    
+</div>

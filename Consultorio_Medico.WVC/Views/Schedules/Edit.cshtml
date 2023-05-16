@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Consultorio_Medico.BL.DTOs.ScheduleDTO.UpdateScheduleDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4><center>Editar Horario</center></h4>
+<hr />
+<div class="container" style="padding: 50px 10px 10px 10px">
+    <div class="">
+        <div class="row d-flex justify-content-center align-items-center">
+
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <label asp-for="SchedulesId" hidden></label>
+                    <input asp-for="SchedulesId" hidden/>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="DayName" class="control-label"></label>
+                        <input asp-for="DayName" class="form-control" />
+
+                        <span asp-validation-for="DayName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartShift" class="control-label"></label>
+                        <input asp-for="StartShift" class="form-control" />
+
+                        <span asp-validation-for="StartShift" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndOfShift" class="control-label"></label>
+                        <input asp-for="EndOfShift" class="form-control" />
+                        <span asp-validation-for="EndOfShift" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Edit" class="btn btn-primary" /> ||
+                        <a asp-action="Index" class="btn btn-danger">Back to List</a>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

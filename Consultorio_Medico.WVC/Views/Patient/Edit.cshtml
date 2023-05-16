@@ -1,0 +1,53 @@
+﻿@model Consultorio_Medico.BL.DTOs.PatientDTO.patientAddDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3><center>Editar Paciente</center></h3>
+<hr />
+    
+<div class="container" style="padding: 50px 10px 10px 10px">
+    <div class="">
+        <div class="row d-flex justify-content-center align-items-center">
+
+            <div class="col-md-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="patientId" class="control-label" hidden></label>
+                            <input asp-for="patientId" class="form-control" hidden />
+                            <span asp-validation-for="patientId" class="text-danger" hidden></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Telefono" class="control-label"></label>
+                            <input asp-for="Telefono" class="form-control" />
+                            <span asp-validation-for="Telefono" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DUI" class="control-label"></label>
+                            <input asp-for="DUI" class="form-control" />
+                            <span asp-validation-for="DUI" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />||
+                            <a asp-action="Index" class="btn btn-danger">Back to List</a>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

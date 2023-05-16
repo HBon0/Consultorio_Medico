@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Consultorio_Medico.BL.DTOs.DTOs.SearchOutputDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Clinica</h1>
+
+<p>
+    <a asp-action="Create">Crear nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficeAddres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficeEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficePhone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserLastName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficeAddres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficeEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficePhone)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { ClinicsId=item.ClinicsId  }, new {@class="btn btn-warning" }) |
+                    @Html.ActionLink("Details", "Details", new {  ClinicsId=item.ClinicsId }, new {@class="btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { ClinicsId=item.ClinicsId},new {@class="btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,99 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<Consultorio_Medico.BL.DTOs.AppointmentDTO.AppointmentSearchInputDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h3><center>Citas</center></h3>
+<hr />
+
+<div>
+    <p style="padding: 20px;">
+        <a asp-action="Create" class="btn btn-info">Crear nuevo</a>
+    </p>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SpecialtieName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reason)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Shift)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model is not null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SpecialtieName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reason)
+                        </td>
+                        @if (item.Shift == true)
+                        {
+                            <td>AM</td>
+                        }
+                        else if (item.Shift == false)
+                        {
+                            <td>PM</td>
+                        }
+                        @if (item.Status == 1)
+                        {
+                            <td>ACTIVO</td>
+                        }
+                        else if (item.Status == 2)
+                        {
+                            <td>INACTIVO</td>
+                        }
+
+                        <td>
+                            @if (User.IsInRole("Administrador"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { Id=item.AppointmentId  }, new {@class="btn btn-warning" })
+                            } |
+                            @Html.ActionLink("Details", "Details", new {  Id=item.AppointmentId }, new {@class="btn btn-info" }) |
+                            @Html.ActionLink("Delete", "Delete", new { Id=item.AppointmentId},new {@class="btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

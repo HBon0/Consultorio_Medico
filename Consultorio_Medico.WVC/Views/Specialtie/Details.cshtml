@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Consultorio_Medico.BL.DTOs.SpecialtiesDTO.SpecialtiesOutputDTO
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3><center>Detalles Specialidad</center></h3>
+<hr />
+
+<div class="container" style="padding: 50px 10px 10px 10px">
+    <div class="">
+        <div class="row d-flex justify-content-center align-items-center">
+
+            <div class="col-md-4">
+                <label asp-for="Id" hidden></label>
+                <input asp-for="Id" hidden />
+                <div class="">
+                    <div class="">
+                        <div class="form-group">
+                            <label asp-for="Specialties" class="form-label" disabled></label>
+                            <input asp-for="Specialties" class="form-control" disabled  />
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @Html.ActionLink("Edit", "Edit", new {  Id = Model.Id }, new { @class = "btn btn-warning"}) |
+                    <a asp-action="Index" class="btn btn-danger">Regresar a lista</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Consultorio_Medico.BL.DTOs.AppointmentDTO.AppointmentInputDTO
+
+@{
+    ViewData["Title"] = "Create";
+    var users = ViewBag.Users;
+    var Specialties = ViewBag.Specialties;
+    var Patients = ViewBag.Patients;
+}
+
+<h3><center>Editar Cita</center></h3>
+<hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label class="control-label">Usuario</label>
+            <select asp-for="UserId" class="form-control">
+                <option selecter>
+                    SELECCIONAR USUARIO
+                </option>
+                @foreach (var item in users)
+                {
+                    <option value=@item.UserId>@item.Name @item.LastName</option>
+                }
+            </select>
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label class="control-label">Specialidad</label>
+            <select asp-for="SpecialtieId" class="form-control">
+                <option selecter>
+                    SELECCIONAR ESPECIALIDAD
+                </option>
+                @foreach (var item in Specialties)
+                {
+                    <option value=@item.Id>@item.Specialties</option>
+                }
+            </select>
+            <span asp-validation-for="SpecialtieId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label class="control-label">Paciente</label>
+            <select asp-for="PatientId" class="form-control">
+                <option selecter>
+                    SELECCIONAR PACIENTE
+                </option>
+                @foreach (var item in Patients)
+                {
+                    <option value=@item.patientId>@item.Name @item.LastName</option>
+                }
+            </select>
+            <span asp-validation-for="PatientId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Reason" class="control-label"></label>
+            <input asp-for="Reason" class="form-control" />
+            <span asp-validation-for="Reason" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Appointment_date" class="control-label"></label>
+            <input asp-for="Appointment_date" class="form-control" />
+            <span asp-validation-for="Appointment_date" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="form-group col-md-4">
+            <label asp-for="Appointment_Hour" class="control-label"></label>
+            <input asp-for="Appointment_Hour" class="form-control" />
+            <span asp-validation-for="Appointment_Hour" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Shift" class="control-label"></label>
+            <select asp-for="Shift" class="form-control">
+                <option value="true" selected>SELECCIONAR HORARIO</option>
+                <option value="true">AM</option>
+                <option value="false">PM</option>
+            </select>
+            <span asp-validation-for="Shift" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Status" class="control-label"></label>
+            <select asp-for="Status" class="form-control">
+                <option selected>SELECCIONAR ESTADO</option>
+                <option value="1">REALIZADA</option>
+                <option value="2">INACTIVA</option>
+                <option value="3">PENDIENTE</option>
+                <option value="4">CANCELADA</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="AppointmentId" hidden/>
+        <input value=@Model.AppointmentId name="Id" type="number" hidden/>
+        <input type="submit" value="Edit" class="btn btn-primary" /> ||
+        <a asp-action="Index" class="btn btn-danger">Regresar a lista</a>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

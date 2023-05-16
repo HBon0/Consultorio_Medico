@@ -1,0 +1,47 @@
+﻿@model Consultorio_Medico.BL.DTOs.PatientDTO.patientSearchOutputDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h3><center>Eliminar Paciente</center></h3>
+<hr />
+<h3><center>Esta seguro de eliminar este registro?</center></h3>
+<br />
+<div>
+    <div class="container" style="padding: 50px 10px 10px 10px">
+        <div class="">
+            <div class="row d-flex justify-content-center align-items-center">
+
+                <div class="col-md-4">
+                    <form asp-action="Delete">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="form-label" asp-for="patientId" hidden></label>
+                            <input class="form-control" asp-for="patientId" hidden disabled />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Name"></label>
+                            <input class="form-control" asp-for="Name" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" asp-for="LastName"></label>
+                            <input class="form-control" asp-for=" LastName" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Telefono"></label>
+                            <input class="form-control" asp-for="Telefono" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" asp-for="DUI"></label>
+                            <input class="form-control" asp-for="DUI" disabled />
+                        </div>
+                        <input type="number" value=@Model.patientId name="Id" hidden />
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        <a asp-action="Index" class="btn btn-info">Back to List</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Consultorio_Medico.BL.DTOs.WorkPlaceDTO.WorkPlaceSearchOutPutDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2><center>Lugar de Trabajo</center></h2>
+<div>
+    <p style="padding: 20px;">
+        <a asp-action="Create" class="btn btn-info">Crear Lugar de Trabajo</a>
+    </p>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.WorkPlaces)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkPlaces)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { Id=item.WorkPlacesId  }, new {@class="btn btn-warning" }) |
+                        @Html.ActionLink("Details", "Details", new {  Id=item.WorkPlacesId }, new {@class="btn btn-info" }) |
+                        @Html.ActionLink("Delete", "Delete", new { Id=item.WorkPlacesId},new {@class="btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

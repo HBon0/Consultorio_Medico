@@ -1,0 +1,195 @@
+﻿@model Consultorio_Medico.BL.DTOs.userDTO.UserAddDTO
+
+@{
+    ViewData["Title"] = "Create";
+    var Roles = ViewBag.Roles;
+    var Workplace = ViewBag.Workplace;
+    var Schedules = ViewBag.Schedules;
+    var Specialties = ViewBag.Specialties;
+}
+
+<h3><center>Crear Usuario</center></h3>
+<hr />
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="RolId" class="control-label"></label>
+            <select asp-for="RolId" class="form-control">
+                <option selecter>
+                    SELECCIONAR ROL
+                </option>
+                @foreach (var item in Roles)
+                {
+                    <option value=@item.RolId>@item.Name</option>
+                }
+            </select>
+            <span asp-validation-for="RolId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="WorkplacesId" class="control-label"></label>
+            <select asp-for="WorkplacesId" class="form-control">
+                <option selecter>
+                    LUGAR DE TRABAJO
+                </option>
+                @foreach (var item in Workplace)
+                {
+                    <option value=@item.WorkPlacesId>@item.WorkPlaces</option>
+                }
+            </select>
+            <span asp-validation-for="WorkplacesId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="PhonNumber" class="control-label"></label>
+            <input asp-for="PhonNumber" class="form-control" />
+            <span asp-validation-for="PhonNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Dui" class="control-label"></label>
+            <input asp-for="Dui" class="form-control" />
+            <span asp-validation-for="Dui" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Login" class="control-label"></label>
+            <input asp-for="Login" class="form-control" />
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="ConfirmarPassword_aux" class="control-label"></label>
+            <input asp-for="ConfirmarPassword_aux" class="form-control" />
+            <span asp-validation-for="ConfirmarPassword_aux" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Status" class="control-label"></label>
+            <select asp-for="Status" class="form-control">
+                <option selected value="1">SELECCIONAR ESTADO</option>
+                <option value="1">ACTIVO</option>
+                <option value="2">INACTIVO</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="FechaRegistro" class="control-label"></label>
+            <input asp-for="FechaRegistro" class="form-control" />
+            <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+        </div>
+    </div>
+    @*<div id="accordion">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            SCHEDULES
+                        </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-label">Schedules</label>
+                                    <select id="SlcSchedules" class="form-control">
+                                        <option selected >SELECT SCHEDULE</option>
+                                        @foreach(var item in Schedules)
+                                        {
+                                            <option value=@item.SchedulesId,@item.DayName,@item.StartOfShift,@item.StartOfShift >@item.DayName @item.StartOfShift @item.StartOfShift</option>
+                                        }
+                                    </select>
+                            
+                                </div>
+                                <div class="col-md-4">
+                                    <br />
+                                    <button id="btnAddSchedule" type="button" class="btn btn-success">AGREGAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                 <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            SPECIALTIES
+                        </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-label">Specialtie</label>
+                                    <select id="SlcSpecialties" class="form-control">
+                                        <option selected>SELECT SPECIALTIE</option>
+                                        @foreach(var item in Specialties)
+                                        {
+                                            <option value="@item.Id,@item.Specialties" data-opcion=@item.Id>@item.Specialties</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <br />
+                                    <button id="btnAddSpecialtie" type="button" class="btn btn-success">AGREGAR</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+  
+    </div>
+    *@
+    <div class="form-group">
+        <input type="submit" value="Crear" class="btn btn-primary" /> ||
+        <a asp-action="Index" class="btn btn-danger">Regresar a lista</a>
+    </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<scrip src="C:\Projects\Consultorio_Medico\Consultorio_Medico.WVC\wwwroot\js\User\AddTable.js" type="text/javascript"></scrip>
+
+<script type="text/javascript">
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

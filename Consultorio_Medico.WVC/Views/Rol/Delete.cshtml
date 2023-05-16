@@ -1,0 +1,48 @@
+﻿@model Consultorio_Medico.BL.DTOs.RolDTO.GetRolByIdDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3><center>Delete Rol</center></h3>
+<hr />
+<h4>¿Estás seguro de que quieres eliminar esto?</h4>
+<div>
+<hr />
+    <div class="container" style="padding: 50px 10px 10px 10px">
+        <div class="">
+            <div class="row d-flex justify-content-center align-items-center">
+
+                <div class="col-md-4">
+                    
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" disabled />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            @if (Model.Status == 1)
+                            {
+                                <input value="ACTIVO" class="form-control" disabled />
+                            }
+                            else if (Model.Status == 2)
+                            {
+                                <input value="INACTIVO" class="form-control disabled" />
+                            }
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                        <form asp-action="Delete">
+                            <input value=@Model.RolId name="Id" hidden />
+                            <input type="submit" value="Delete" class="btn btn-danger" /> |
+                            <a asp-action="Index" class="btn btn-info">Regresar a lista</a>
+                        </form>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+</div>

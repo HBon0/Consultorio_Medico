@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Consultorio_Medico.BL.DTOs.userDTO.userSearchOutputDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1><center>Usuarios</center></h1>
+
+
+<div>
+    <p style="padding: 20px;">
+        <a asp-action="Create" class="btn btn-info">Crear nuevo</a>
+    </p>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.RolName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkPlaceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dui)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+                     
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.RolName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkPlaceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dui)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                
+                
+
+                @if (item.Status == 1)
+                {
+                    <td>ACTIVO</td>
+                }
+                else if (item.Status == 2)
+                {
+                    <td>INACTIVO</td>
+                }
+
+
+                <td>
+                    @if (User.IsInRole("Administrador")) {
+                        @Html.ActionLink("Edit", "Edit", new { Id=item.UserId  }, new {@class="btn btn-warning" })
+                    } |
+                    @Html.ActionLink("Details", "Details", new {  Id=item.UserId }, new {@class="btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { Id=item.UserId},new {@class="btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

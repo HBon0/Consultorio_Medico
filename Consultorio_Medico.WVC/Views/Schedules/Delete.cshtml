@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Consultorio_Medico.BL.DTOs.ScheduleDTO.GetScheduleByIdDTO
+@{
+    ViewData["Title"] = "Delete";
+}
+<h4><center>Eliminar Horario</center></h4>
+<hr />
+<div class="container" style="padding: 50px 10px 10px 10px">
+    <div class="">
+        <div class="row d-flex justify-content-center align-items-center">
+            
+
+            <div class="col-md-4">
+                <form asp-action="Delete">
+                    <Label asp-for="ScheduleId" hidden></Label>
+                    <input asp-for="ScheduleId" hidden />
+                    <input type="number" value=@Model.ScheduleId name="Id" hidden />
+                    <div class="">
+                        <label class="form-label" asp-for="DayName" disable></label>
+                        <input class="form-control" asp-for="DayName" disabled />
+                    </div>
+                    <br />
+                    <div class="">
+                        <label class="form-label" asp-for="StartOfShift" disabled></label>
+                        <input class="form-control" asp-for="StartOfShift" disabled />
+                    </div>
+                    <br />
+                    <div class="">
+                        <label class="form-label" asp-for="EndOfShift" disabled></label>
+                        <input class="form-control" asp-for="EndOfShift" disabled />
+                    </div>
+                    <br />
+                    <input type="submit" class="btn btn-danger" value="Eliminar"/> ||
+                    <a asp-action="Index" class="btn btn-primary">Back To List</a>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>

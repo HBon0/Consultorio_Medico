@@ -1,0 +1,43 @@
+﻿@model Consultorio_Medico.BL.DTOs.WorkPlaceDTO.GetWorkPlaceByIdDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h4><center>Detalles Lugar de Trabajo</center></h4>
+<hr />
+<div class="container" style="padding: 50px 10px 10px 10px">
+    <div class="">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-4">
+                    <div class="">
+                        <input type="number" name="Id" value=@Model.WorkPlacesId hidden />
+                    </div>
+                    <div class="">
+                        <label asp-for="WorkPlacesId" hidden></label>
+                        <input asp-for="WorkPlacesId" hidden />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkPlaces" class="control-label" disabled></label>
+                        <input asp-for="WorkPlaces" class="form-control" disabled/>
+                        <span asp-validation-for="WorkPlaces" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="5">
+                                @Html.ActionLink("Edit", "Edit", new { Id = Model.WorkPlacesId }, new { @class="btn btn-warning"}) |
+                                
+                            </div>
+                            <div class="5">
+                                <a asp-action="Index" class="btn btn-danger">Regresar a lista</a>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+
