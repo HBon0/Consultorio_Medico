@@ -1,4 +1,4 @@
-﻿@model Consultorio_Medico.BL.DTOs.ScheduleDTO.AddScheduleDTO
+﻿@model Consultorio_Medico.BL.DTOs.ScheduleDTO.ScheduleInputDTO
 
 @{
     ViewData["Title"] = "Create";
@@ -20,10 +20,10 @@
                             <span asp-validation-for="DayName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="StarShift" class="control-label"></label>
-                            <input asp-for="StarShift" class="form-control" />
+                            <label asp-for="StartOfShift" class="control-label"></label>
+                        <input asp-for="StartOfShift" class="form-control" />
 
-                            <span asp-validation-for="StarShift" class="text-danger"></span>
+                        <span asp-validation-for="StartOfShift" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="EndOfShift" class="control-label"></label>

@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL.DTOs.RolDTO
 {
-    public class GetRolByIdDTO
+    public class RolInputDTO
     {
-
         public int RolId { get; set; }
         public string Name { get; set; }
         public byte Status { get; set; }
-
     }
-
 }

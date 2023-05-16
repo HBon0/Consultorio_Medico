@@ -14,24 +14,21 @@ namespace Consultorio_Medico.BL
 {
     public class ScheduleBL:IScheduleBL
     {
-
-        readonly IScheduleDAL _scheduleDAL;
-        readonly IUnitOfWork _unitOfWork;
+        private readonly IScheduleDAL _scheduleDAL;
+        private readonly IUnitOfWork _unitOfWork;
 
         public ScheduleBL(IScheduleDAL ScheduleDAL, IUnitOfWork unitOfWork)
         {
             _scheduleDAL = ScheduleDAL;
             _unitOfWork = unitOfWork;
-
-
         }
 
-        public async Task<int> Create(AddScheduleDTO Schedule)
+        public async Task<int> Create(ScheduleInputDTO Schedule)
         {
             Schedules schedules = new Schedules()
             {
                 DayName = Schedule.DayName,
-                StartOfShift = Schedule.StarShift,
+                StartOfShift = Schedule.StartOfShift,
                 EndOfShift = Schedule.EndOfShift,
                                          
             };
@@ -53,12 +50,12 @@ namespace Consultorio_Medico.BL
 
         }
 
-        public async Task<GetScheduleByIdDTO> GetById(int Id)
+        public async Task<ScheduleSearchOutPutDTO> GetById(int Id)
         {
           Schedules schedEN = await _scheduleDAL.GetById(Id);
-            return new GetScheduleByIdDTO()
+            return new ScheduleSearchOutPutDTO()
             {
-               ScheduleId= schedEN.SchedulesId,
+               SchedulesId= schedEN.SchedulesId,
                DayName= schedEN.DayName,
                 StartOfShift = schedEN.StartOfShift,
                EndOfShift= schedEN.EndOfShift,  
@@ -77,8 +74,6 @@ namespace Consultorio_Medico.BL
                 DayName=s.DayName,
                 StartOfShift = s.StartOfShift,
                 EndOfShift = s.EndOfShift,
-
-
             }));
             return list;
         
@@ -86,14 +81,14 @@ namespace Consultorio_Medico.BL
 
 
 
-        public async Task<int> Update(UpdateScheduleDTO Schedule)
+        public async Task<int> Update(ScheduleInputDTO Schedule)
         {
             Schedules schedEN = await _scheduleDAL.GetById(Schedule.SchedulesId);
             if (schedEN.SchedulesId == Schedule.SchedulesId)
             {
                 schedEN.SchedulesId = Schedule.SchedulesId;
                 schedEN.DayName = Schedule.DayName;
-                schedEN.StartOfShift = Schedule.StartShift;
+                schedEN.StartOfShift = Schedule.StartOfShift;
                 schedEN.EndOfShift = Schedule.EndOfShift;
                 return await _unitOfWork.SaveChangesAsync();
 

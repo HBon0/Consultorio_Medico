@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL.DTOs.ScheduleDTO
 {
-    public class UpdateScheduleDTO
+    public class ScheduleInputDTO
     {
-        public int SchedulesId { get; set; }  
-        public string DayName { get; set; }    
-        public decimal StartShift { get; set; } 
-
+        public int SchedulesId { get; set; }
+        public string DayName { get; set; }
+        public decimal StartOfShift { get; set; }
         public decimal EndOfShift { get; set; }
     }
 }

@@ -21,17 +21,11 @@ namespace Consultorio_Medico.API.Controllers
         [HttpGet]
         public async Task<List<WorkPlaceSearchOutPutDTO>> Get()
         {
-            List<WorkPlaceSearchOutPutDTO> list = new List<WorkPlaceSearchOutPutDTO>();
 
             WokplaceSearchInputDTO wokplace = new WokplaceSearchInputDTO();
             var Workplaces = await _workPlaceBL.Search(wokplace);
 
-            Workplaces.ForEach(s => list.Add( new WorkPlaceSearchOutPutDTO
-            {
-                WorkPlacesId = s.WorkPlacesId,
-                WorkPlaces = s.WorkPlaces
-            }));
-            return list;
+            return Workplaces;
         }
 
         // GET api/<WorkPlaceController>/5

@@ -10,13 +10,13 @@ namespace Consultorio_Medico.BL.Interfaces
 {
     public interface IScheduleBL
     {
-        Task<int> Create(AddScheduleDTO Schedule);
+        Task<int> Create(ScheduleInputDTO Schedule);
 
-        Task<int> Update(UpdateScheduleDTO Schedule);
+        Task<int> Update(ScheduleInputDTO Schedule);
 
         Task<int> Delete(int Id);
 
-        Task<GetScheduleByIdDTO> GetById(int Id);
+        Task<ScheduleSearchOutPutDTO> GetById(int Id);
 
         Task<List<ScheduleSearchOutPutDTO>> Search(ScheduleSearchInputDTO Schedule);
     }

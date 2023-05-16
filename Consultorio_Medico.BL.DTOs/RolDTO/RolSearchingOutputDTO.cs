@@ -11,7 +11,7 @@ namespace Consultorio_Medico.BL.DTOs.RolDTO
         public int RolId { get; set; }
         public string Name { get; set; }
 
-        public int  Status { get; set; }
+        public byte  Status { get; set; }
 
     }
 

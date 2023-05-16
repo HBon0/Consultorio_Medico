@@ -31,15 +31,11 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: RolController/Details/5
         public async Task<ActionResult> Details(int Id)
         {
-           
-
-            GetRolByIdDTO rol = await _rolBL.GetById(Id);
+            RolSearchingOutputDTO rol = await _rolBL.GetById(Id);
             return View(rol);
 
 
         }
-
-
 
         // GET: RolController/Create
         public ActionResult Create()
@@ -52,7 +48,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // POST: RolController/Create
         [HttpPost]
         
-        public async Task<ActionResult> Create(RolAddDTO pRol)
+        public async Task<ActionResult> Create(RolInputDTO pRol)
         {
             try
             {
@@ -78,8 +74,8 @@ namespace Consultorio_Medico.MVC.Controllers
         public async Task<ActionResult>Edit(int id)
         {
 
-            GetRolByIdDTO rol = await _rolBL.GetById(id);
-            var rolResults = new RolUpdateDTO()
+            RolSearchingOutputDTO rol = await _rolBL.GetById(id);
+            var rolResults = new RolInputDTO()
             {
                 RolId = rol.RolId,
                 Name = rol.Name,
@@ -91,7 +87,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // POST: RolController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int Id, RolUpdateDTO pRol)
+        public async Task<ActionResult> Edit(int Id, RolInputDTO pRol)
         {
             try
             {
@@ -114,14 +110,14 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: RolController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            GetRolByIdDTO rol = await _rolBL.GetById(id);
+            RolSearchingOutputDTO rol = await _rolBL.GetById(id);
             return View(rol);
         }
 
         // POST: RolController/Delete/5
         [HttpPost]
  
-        public async Task<ActionResult> Delete(int Id, GetRolByIdDTO pRol)
+        public async Task<ActionResult> Delete(int Id, RolSearchingOutputDTO pRol)
         {
             try
             {

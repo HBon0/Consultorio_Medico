@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Consultorio_Medico.BL.DTOs.ScheduleDTO.GetScheduleByIdDTO
+@model Consultorio_Medico.BL.DTOs.ScheduleDTO.ScheduleSearchOutPutDTO
 @{
     ViewData["Title"] = "Delete";
 }
@@ -14,9 +14,9 @@
 
             <div class="col-md-4">
                 <form asp-action="Delete">
-                    <Label asp-for="ScheduleId" hidden></Label>
-                    <input asp-for="ScheduleId" hidden />
-                    <input type="number" value=@Model.ScheduleId name="Id" hidden />
+                    <Label asp-for="SchedulesId" hidden></Label>
+                    <input asp-for="SchedulesId" hidden />
+                    <input type="number" value=@Model.SchedulesId name="Id" hidden />
                     <div class="">
                         <label class="form-label" asp-for="DayName" disable></label>
                         <input class="form-control" asp-for="DayName" disabled />

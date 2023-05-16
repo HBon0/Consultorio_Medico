@@ -30,15 +30,12 @@ namespace Consultorio_Medico.BL
         }
 
 
-        public async Task<int> Create(RolAddDTO pRol)
+        public async Task<int> Create(RolInputDTO pRol)
         {
             Rol rolEN = new Rol()
             {
                 Name = pRol.Name,
-
                 Status = pRol.Status,
-
-
             };
             _rolDAL.Create(rolEN);
             return await _unitOfWork.SaveChangesAsync();
@@ -56,10 +53,6 @@ namespace Consultorio_Medico.BL
                 return 0;
         }
 
-
-
-
-
         public async Task<List<RolSearchingOutputDTO>> Search(RolSearchingInputDTO pRol)
         {
             List<Rol> Rol = await _rolDAL.Search(new Rol { RolId = pRol.RolIdLike, Name = pRol.NameLike });
@@ -76,9 +69,7 @@ namespace Consultorio_Medico.BL
 
         }
 
-      
-
-        public async Task<int> Update(RolUpdateDTO pRol)
+        public async Task<int> Update(RolInputDTO pRol)
         {
             Rol rol = await _rolDAL.GetById(pRol.RolId);
             if (rol.RolId == pRol.RolId)
@@ -94,19 +85,17 @@ namespace Consultorio_Medico.BL
             else return 0;
         }
 
-
-
-        public async Task<GetRolByIdDTO> GetById(int Id)
+        public async Task<RolSearchingOutputDTO> GetById(int Id)
         {
             Rol rolEN = await _rolDAL.GetById(Id);
-            return new GetRolByIdDTO()
+            return new RolSearchingOutputDTO()
             {
 
                 RolId = rolEN.RolId,
                 Name=rolEN.Name,
                 Status = rolEN.Status,
             };
-            }
+        }
     }
 }
 

@@ -47,7 +47,7 @@ namespace Consultorio_Medico.MVC.Controllers
 
         // POST: SchedulesController/Create
         [HttpPost]
-        public async Task<ActionResult> Create(AddScheduleDTO schedule)
+        public async Task<ActionResult> Create(ScheduleInputDTO schedule)
         {
 
             try
@@ -72,12 +72,12 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: SchedulesController/Edit/5
         public async Task<ActionResult> Edit(int Id)
         {
-            GetScheduleByIdDTO schedule = await _scheduleBL.GetById(Id);
-            var SchedResult = new UpdateScheduleDTO()
+            ScheduleSearchOutPutDTO schedule = await _scheduleBL.GetById(Id);
+            var SchedResult = new ScheduleInputDTO()
             {
-                SchedulesId = schedule.ScheduleId,
+                SchedulesId = schedule.SchedulesId,
                 DayName = schedule.DayName,
-                StartShift = schedule.StartOfShift,   
+                StartOfShift = schedule.StartOfShift,   
                 EndOfShift=schedule.EndOfShift,
 
             };
@@ -87,7 +87,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // POST: SchedulesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, UpdateScheduleDTO schedule)
+        public async Task<ActionResult> Edit(int id, ScheduleInputDTO schedule)
         {
             try
             {
@@ -111,14 +111,14 @@ namespace Consultorio_Medico.MVC.Controllers
         public async Task<ActionResult> Delete(int Id)
         {
 
-            GetScheduleByIdDTO customer = await _scheduleBL.GetById(Id);
+            ScheduleSearchOutPutDTO customer = await _scheduleBL.GetById(Id);
             return View(customer);
         }
 
         // POST: SchedulesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async  Task<ActionResult> Delete(int Id, GetScheduleByIdDTO schedule)
+        public async  Task<ActionResult> Delete(int Id, ScheduleSearchOutPutDTO schedule)
         {
             try
             {
