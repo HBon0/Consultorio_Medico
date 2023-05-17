@@ -68,7 +68,7 @@ namespace Consultorio_Medico.MVC.Controllers
 
         // POST: UserScheduleController/Create
         [HttpPost]  
-        public async Task<ActionResult> Create(userScheduleAddDTO pUserSched)
+        public async Task<ActionResult> Create(UserScheduleInputDTO pUserSched)
         {
             try
             {
@@ -103,9 +103,9 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Horarios = schedList;
 
             var UserSchedule = await _userSchedBL.GetById(Id);
-            return View(new userScheduleUpdateDTO
+            return View(new UserScheduleInputDTO
             {
-                UserSchedulesId = UserSchedule.UserSchedulesId,
+                UserScheduleId = UserSchedule.UserSchedulesId,
                 UserId = UserSchedule.UserId,
                 SchedulesId = UserSchedule.SchedulesId
             });
@@ -114,7 +114,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // POST: UserScheduleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int Id, userScheduleUpdateDTO pUserSchedule)
+        public async Task<ActionResult> Edit(int Id, UserScheduleInputDTO pUserSchedule)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Horarios = schedList;
 
             var UserSchedule = await _userSchedBL.GetById(Id);
-            return View(new userScheduleGetByIdDTO
+            return View(new UserScheduleSearchOutputDTO
             {
                 UserSchedulesId = UserSchedule.UserSchedulesId,
                 UserId = UserSchedule.UserId,
@@ -160,7 +160,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // POST: UserScheduleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int Id, userScheduleGetByIdDTO pUserSchedule)
+        public async Task<ActionResult> Delete(int Id, userSearchOutputDTO pUserSchedule)
         {
             try
             {

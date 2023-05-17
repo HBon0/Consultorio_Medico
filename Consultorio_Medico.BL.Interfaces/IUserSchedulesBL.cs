@@ -9,13 +9,13 @@ namespace Consultorio_Medico.BL.Interfaces
 {
     public interface IUserSchedulesBL
     {
-        Task<int> Create(userScheduleAddDTO pUerChed);
+        Task<int> Create(UserScheduleInputDTO pUerChed);
 
-        Task<int> Update(userScheduleUpdateDTO pUserChed);
+        Task<int> Update(UserScheduleInputDTO pUserChed);
 
         Task<int> Delete(int id);
 
-        Task<userScheduleGetByIdDTO> GetById(int id);
+        Task<UserScheduleSearchOutputDTO> GetById(int id);
 
         Task<List<UserScheduleSearchOutputDTO>> Search(UserScheduleSearchInpuntDTO pUserChed);
 

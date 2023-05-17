@@ -21,7 +21,7 @@ namespace Consultorio_Medico.BL
             _userScheduleDAL = UserScheduleDAL;
             _unitOfWork = unitOfWork;
         }
-        public async Task<int> Create(userScheduleAddDTO pUerChed)
+        public async Task<int> Create(UserScheduleInputDTO pUerChed)
         {
             UserSchedules userSchedulesEN = new UserSchedules()
             {
@@ -43,10 +43,10 @@ namespace Consultorio_Medico.BL
             else
                 return 0;
         }
-        public async Task<userScheduleGetByIdDTO> GetById(int id)
+        public async Task<UserScheduleSearchOutputDTO> GetById(int id)
         {
             UserSchedules userSchedulesEN = await _userScheduleDAL.GetById(id);
-            return new userScheduleGetByIdDTO()
+            return new UserScheduleSearchOutputDTO()
             {
                 UserSchedulesId = userSchedulesEN.UserSchedulesId,
                 UserId = userSchedulesEN.UserId,
@@ -68,12 +68,12 @@ namespace Consultorio_Medico.BL
             }));
             return list;
         }
-        public async Task<int> Update(userScheduleUpdateDTO pUserChed)
+        public async Task<int> Update(UserScheduleInputDTO pUserChed)
         {
-            UserSchedules UserChed = await _userScheduleDAL.GetById(pUserChed.UserSchedulesId);
-            if (UserChed.UserSchedulesId == pUserChed.UserSchedulesId)
+            UserSchedules UserChed = await _userScheduleDAL.GetById(pUserChed.UserScheduleId);
+            if (UserChed.UserSchedulesId == pUserChed.UserScheduleId)
             {
-                UserChed.UserSchedulesId = pUserChed.UserSchedulesId;
+                UserChed.UserSchedulesId = pUserChed.UserScheduleId;
                 UserChed.UserId = pUserChed.UserId;
                 UserChed.SchedulesId = pUserChed.SchedulesId;
                 _userScheduleDAL.Update(UserChed);

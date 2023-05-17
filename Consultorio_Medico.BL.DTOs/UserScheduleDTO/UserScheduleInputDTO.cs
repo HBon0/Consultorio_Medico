@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL.DTOs.UserSchedule
 {
-   public class userScheduleUpdateDTO
+    public class UserScheduleInputDTO
     {
-        public int UserSchedulesId { get; set; }
+        public int UserScheduleId { get; set; }
         public int UserId { get; set; }
         public int SchedulesId { get; set; }
     }
