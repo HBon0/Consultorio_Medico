@@ -3,6 +3,7 @@ using Consultorio_Medico.BL.DTOs.WorkPlaceDTO;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
 using Consultorio_Medico.Entities.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,13 @@ namespace Consultorio_Medico.BL
 
         readonly IWorkPlaceDAL _WorkPlaceDAL;
         readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<WorkPlaceBL> _logger;
 
-        public WorkPlaceBL(IWorkPlaceDAL workPlaceDAL, IUnitOfWork unitOfWork)
+        public WorkPlaceBL(IWorkPlaceDAL workPlaceDAL, IUnitOfWork unitOfWork, ILogger<WorkPlaceBL> logger)
         {
             _WorkPlaceDAL = workPlaceDAL;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
         public async  Task<int> Create(WorkPlaceInputDTO pWork)
         {
@@ -60,6 +63,7 @@ namespace Consultorio_Medico.BL
 
         public async  Task<List<WorkPlaceSearchOutPutDTO>> Search(WokplaceSearchInputDTO pWork)
         {
+            _logger.LogInformation("--------------- INICIO DE METODO SEARCH WORKPLACE -----------------------");
             List<WorkPlace> WorkP = await _WorkPlaceDAL.Search(new WorkPlace { WorkPlaces = pWork.WorkPlaces, WorkPlacesId = pWork.WorkplacesId });
             List<WorkPlaceSearchOutPutDTO> list = new List<WorkPlaceSearchOutPutDTO>();
             WorkP.ForEach(s => list.Add(new WorkPlaceSearchOutPutDTO
