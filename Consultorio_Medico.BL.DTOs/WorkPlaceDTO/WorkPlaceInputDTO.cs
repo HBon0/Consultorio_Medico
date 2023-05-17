@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL.DTOs.WorkPlaceDTO
 {
-    public class WorkPlaceAddDTO
+    public class WorkPlaceInputDTO
     {
-        public string WorkPlaces { get; set; }  
+        public int WorkPlacesId { get; set; }
+        public string WorkPlaces { get; set; }
     }
 }

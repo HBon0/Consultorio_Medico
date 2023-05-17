@@ -10,13 +10,13 @@ namespace Consultorio_Medico.BL.Interfaces
 {
     public interface IWorkPlaceBL
     {
-        Task<int> Create(WorkPlaceAddDTO pPWork);
+        Task<int> Create(WorkPlaceInputDTO pPWork);
 
-        Task<int> Update(UpdateWorkPlaceDTO pWork);
+        Task<int> Update(WorkPlaceInputDTO pWork);
 
         Task<int> Delete(int Id);
 
-        Task<GetWorkPlaceByIdDTO> GetById(int Id);
+        Task<WorkPlaceSearchOutPutDTO> GetById(int Id);
 
         Task<List<WorkPlaceSearchOutPutDTO>> Search(WokplaceSearchInputDTO pWork);
     }

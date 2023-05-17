@@ -8,8 +8,8 @@ namespace Consultorio_Medico.BL.DTOs.WorkPlaceDTO
 {
     public class WokplaceSearchInputDTO
     {
-        public int WorkplacesIdLike { get; set; } 
-        public string WorkPlacesLike { get; set; }
+        public int WorkplacesId { get; set; } 
+        public string WorkPlaces{ get; set; }
 
         public Task Search(WokplaceSearchInputDTO wokplace)
         {

@@ -22,7 +22,7 @@ namespace Consultorio_Medico.BL
             _WorkPlaceDAL = workPlaceDAL;
             _unitOfWork = unitOfWork;
         }
-        public async  Task<int> Create(WorkPlaceAddDTO pWork)
+        public async  Task<int> Create(WorkPlaceInputDTO pWork)
         {
             WorkPlace WorkEN = new WorkPlace()
             {
@@ -45,11 +45,11 @@ namespace Consultorio_Medico.BL
                 return 0;
         }
 
-        public async Task<GetWorkPlaceByIdDTO> GetById(int Id)
+        public async Task<WorkPlaceSearchOutPutDTO> GetById(int Id)
         {
 
             WorkPlace WorkEN = await _WorkPlaceDAL.GetById(Id);
-            return new GetWorkPlaceByIdDTO()
+            return new WorkPlaceSearchOutPutDTO()
             {
 
                 WorkPlacesId = WorkEN.WorkPlacesId,
@@ -60,7 +60,7 @@ namespace Consultorio_Medico.BL
 
         public async  Task<List<WorkPlaceSearchOutPutDTO>> Search(WokplaceSearchInputDTO pWork)
         {
-            List<WorkPlace> WorkP = await _WorkPlaceDAL.Search(new WorkPlace { WorkPlaces = pWork.WorkPlacesLike, WorkPlacesId = pWork.WorkplacesIdLike });
+            List<WorkPlace> WorkP = await _WorkPlaceDAL.Search(new WorkPlace { WorkPlaces = pWork.WorkPlaces, WorkPlacesId = pWork.WorkplacesId });
             List<WorkPlaceSearchOutPutDTO> list = new List<WorkPlaceSearchOutPutDTO>();
             WorkP.ForEach(s => list.Add(new WorkPlaceSearchOutPutDTO
             {
@@ -73,7 +73,7 @@ namespace Consultorio_Medico.BL
             return list;
         }
 
-        public async Task<int> Update(UpdateWorkPlaceDTO pWork)
+        public async Task<int> Update(WorkPlaceInputDTO pWork)
         {
             WorkPlace WorkEN = await _WorkPlaceDAL.GetById(pWork.WorkPlacesId);
             if (WorkEN.WorkPlacesId == pWork.WorkPlacesId)
