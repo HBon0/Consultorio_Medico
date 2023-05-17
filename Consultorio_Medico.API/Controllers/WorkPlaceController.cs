@@ -11,16 +11,20 @@ namespace Consultorio_Medico.API.Controllers
     public class WorkPlaceController : ControllerBase
     {
         private readonly IWorkPlaceBL _workPlaceBL;
+        private readonly ILogger<WorkPlaceController> _logger;
         
-        public WorkPlaceController (IWorkPlaceBL workPlaceBL)
+        public WorkPlaceController (IWorkPlaceBL workPlaceBL, ILogger<WorkPlaceController> logger)
         {
+
             _workPlaceBL = workPlaceBL;
+            _logger = logger;
         }
 
         // GET: api/<WorkPlaceController>
         [HttpGet]
         public async Task<List<WorkPlaceSearchOutPutDTO>> Get()
         {
+            _logger.LogInformation("------------------------------ INICIO DE METODO GET WORKPLACES --------------------------------");
 
             WokplaceSearchInputDTO wokplace = new WokplaceSearchInputDTO();
             var Workplaces = await _workPlaceBL.Search(wokplace);

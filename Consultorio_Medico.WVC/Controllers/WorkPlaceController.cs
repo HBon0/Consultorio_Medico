@@ -20,15 +20,18 @@ namespace Consultorio_Medico.MVC.Controllers
     public class WorkPlaceController : Controller
     {
 
-        readonly IWorkPlaceBL workPlaceBL;
-        public WorkPlaceController(IWorkPlaceBL workplaceBL)
+        private readonly IWorkPlaceBL workPlaceBL;
+        private readonly ILogger<WorkPlaceController> _logger;
+        public WorkPlaceController(IWorkPlaceBL workplaceBL, ILogger<WorkPlaceController> logger)
         {
             workPlaceBL = workplaceBL;
+            _logger = logger;
         }
         // GET: WorkPlaceController
         public async Task<ActionResult>  Index (WokplaceSearchInputDTO wokplace)
         {
-          var list = await workPlaceBL.Search(wokplace);
+            _logger.LogInformation("--------------- INICIO DE METODO INDEX WORKPLACE -----------------------");
+            var list = await workPlaceBL.Search(wokplace);
             return View(list);
         }
 
