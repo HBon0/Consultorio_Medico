@@ -12,6 +12,7 @@ namespace Consultorio_Medico.MVC.Controllers
         private readonly IUserBL _userBL;
         private readonly ISpecialtieBL _specialtieBL;
         private readonly IPatientBL _patientBL;
+        private readonly ILogger<AppointmentController> _logger;
         public AppointmentController (IAppointmentBL appointmentBL, IUserBL userBL, ISpecialtieBL specialtieBL, IPatientBL petientBL)
         {
             _appointmentBL = appointmentBL;
@@ -22,6 +23,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: AppointmentController
         public async Task<ActionResult> Index(AppointmentSearchInputDTO pAppoinment)
         {
+            _logger.LogInformation("---------- INICIO METODO INDEX APPOINTMENT CONTROLLER ---------");
             List<AppointmentSearchInputDTO> list = new List<AppointmentSearchInputDTO>();
             
             var appointments = await _appointmentBL.Search(pAppoinment);
@@ -40,12 +42,14 @@ namespace Consultorio_Medico.MVC.Controllers
                 Status = s.Status,
             }));
             ViewBag.apointments = list;
+            _logger.LogInformation("--------- FIN METODO INDEX APPOINTMENT CONTROLLER -------------");
             return View(list);
         }
 
         // GET: AppointmentController/Details/5
         public async Task<ActionResult> Details(int Id)
         {
+            _logger.LogInformation("------------ INICIO METODO DETAILS APPOINTMENT CONTROLLER ---------");
             userSearchInputDTO user = new userSearchInputDTO();
             var Users = await _userBL.Search(user);
             var Specialties = await _specialtieBL.GetAll();
@@ -56,6 +60,7 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Patients = Patients;
 
             var appointments = await _appointmentBL.GetById(Id);
+            _logger.LogInformation(" ---------- FIN METODO DETAILS APPOINTMENT CONTROLLER ----------");
             return View(appointments);
         }
 
@@ -80,19 +85,25 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("--------- INICIO METODO CREATE POST APPOINTMENT CONTROLLER ------------");
                 //if (!ModelState.IsValid)
                 //    return View(pAppointment);
                 int result = await _appointmentBL.Create(pAppointment);
-                if (result > 0)
+                if (result > 0) {
+                    _logger.LogInformation("------- REGISTRO CREADO : CREATE POST APPOINTMENT CONTROLLER ---------");
                     return RedirectToAction(nameof(Index));
+                }
+                    
                 else
                 {
+                    _logger.LogWarning("--- ERROR AL CREAR EL REGISTRO : CREATE POST APPOINTMENT CONTROLLER ------");
                     ViewBag.ErrorMessage = "Error al tratar de guardar el registro";
                     return View(pAppointment);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogInformation("-------- ERROR : " + e.Message + " -----------");
                 return View(pAppointment);
             }
         }
@@ -100,6 +111,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: AppointmentController/Edit/5
         public async Task<ActionResult> Edit(int Id)
         {
+            _logger.LogInformation("---------- INICIO METODO EDIT GET APPOINTMENT CONTROLLER ----------");
             userSearchInputDTO user = new userSearchInputDTO();
             var Users = await _userBL.Search(user);
             var Specialties = await _specialtieBL.GetAll();
@@ -110,6 +122,12 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Patients = Patients;
 
             var appointment = await _appointmentBL.GetById(Id);
+            if (appointment is null)
+            {
+                _logger.LogWarning($"------- NO SE ENCONTRO REGISTRO CON ID {Id} : EDIT GET APPOINTMENT CONTROLLER ----");
+                RedirectToAction(nameof(Index));
+            }
+            _logger.LogInformation("------- FIN EDIT GET APPOINTMENT CONTROLLER ----------");
             return View(new AppointmentInputDTO()
             {
                 AppointmentId = appointment.AppointmentId,
@@ -132,19 +150,24 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("-------- INICIO METODO EDIT POST APPOINTMENT CONTROLLER ----------------");
                 //if (!ModelState.IsValid)
                 //    return View(pAppointment);
                 int result = await _appointmentBL.Update(pAppointment);
-                if (result > 0)
+                if (result > 0) {
+                    _logger.LogInformation("----- REGISTRO EDITADO : EDIT POST APPOINTMENT CONTROLLER -----------");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogWarning("--- NO SE PUDO EDITAR: EDITAR POST APPOINTMENT CONTROLLER ----------");
                     ViewBag.ErrorMessage = "Error al tratar de Editar el registro";
                     return View(pAppointment);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError("------- ERROR: " + e.Message + " ------------");
                 return View(pAppointment);
             }
         }
@@ -152,6 +175,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: AppointmentController/Delete/5
         public async  Task<ActionResult> Delete(int Id)
         {
+            _logger.LogInformation("----- INICIO METODO DELETE GET APPOINTMENT CONTROLLER ---------");
             userSearchInputDTO user = new userSearchInputDTO();
             var Users = await _userBL.Search(user);
             var Specialties = await _specialtieBL.GetAll();
@@ -162,6 +186,11 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Patients = Patients;
 
             var appointments = await _appointmentBL.GetById(Id);
+            if (appointments is null) {
+                _logger.LogWarning($"---- REGISTRO CON ID {Id} NO ENCONTRADO: DELETE GET APPOINTMENT CONTROLLER --------");
+                RedirectToAction(nameof(Index));
+            }
+            _logger.LogInformation("------------ FIN METODO DELETE GET APPOINTMENT CONTROLLER ---------");
             return View(appointments);
         }
 
@@ -172,17 +201,22 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("------- INICIO METODO DELETE POST APPOINTMENT CONTROLLER -----------");
                 int result = await _appointmentBL.Delete(Id);
-                if (result > 0)
+                if (result > 0) {
+                    _logger.LogInformation("------- REGISTRO ELIMINADO : DELETE POST APPOINTMENT CONTROLLER ----------");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogWarning("------ NO SE PUDO ELIMINAR : DELETE POST APPOINTMENT CONTROLLER -----------");
                     ViewBag.ErrorMessage = "Error al tratar de Eliminar el registro";
                     return View(pAppointment);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError("--- ERROR: " + ex.Message + " ----------");
                 return View(pAppointment);
             }
         }
