@@ -8,23 +8,32 @@ namespace Consultorio_Medico.MVC.Controllers
     public class SpecialtieController : Controller
     {
         private readonly ISpecialtieBL _specialtieBL;
-        public SpecialtieController (ISpecialtieBL specialtieBL)
+        private readonly ILogger<SpecialtieController> _logger;
+        public SpecialtieController (ISpecialtieBL specialtieBL, ILogger<SpecialtieController> logger)
         {
             _specialtieBL = specialtieBL;
+            _logger = logger;
         }
         // GET: SpecialtieController
         public async Task<ActionResult> Index(SpecialtiesInputDTO pSpecialtie)
         {
+            _logger.LogInformation("----------- INICIO METODO INDEX SPECIALTIES CONTROLLER -----------------");
             var list = await _specialtieBL.Search(pSpecialtie);
             ViewBag.Specialties = list;
+            _logger.LogInformation("-------------- FIN METODO INDEX SPECIALTIES CONTROLLER -------------");
             return View();
         }
 
         // GET: SpecialtieController/Details/5
         public async Task<ActionResult> Details(int Id)
         {
+            _logger.LogInformation("--------------- INICIO METODO DETAILS SPECIALTIES CONTROLELR ---------------");
             var Specialtie = await _specialtieBL.GetById(Id);
-           
+           if (Specialtie is null)
+            {
+                _logger.LogWarning($"------------- El ID {Id} NO FUE ENCONTRADO: DETAILS SPECIALTIES CONTROLLER -----------------");
+            }
+            _logger.LogInformation("-------------------- FIN METODO DETAILS SPECIALTIES CONTROLLER ------------------");
             return View(Specialtie);
         }
 
@@ -41,20 +50,26 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("------------ INICIO METODO CREATE POST SPECIALTIES CONTROLLER -----------------");
                 if (!ModelState.IsValid)
                     return View(pSpecialtie);
 
                 int Restult = await _specialtieBL.Create(pSpecialtie);
-                if (Restult != 0)
+                if (Restult != 0) 
+                {
+                    _logger.LogInformation("------------ REGISTRO CREADO : CREATE POST SPECIALTIES CONTROLLER ----------------");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogInformation("----------- ERROR AL CREAR REGISTRO : CREATE POST SPECIALTIES CONTROLLER -----------");
                     ViewBag.ErrorMessage = "ERROR: NO SE REGISTRO";
                     return View(pSpecialtie);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError("------------ ERROR : " + ex.Message + " --------------------");
                 return View(pSpecialtie);
             }
         }
@@ -78,19 +93,26 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("----------- INICIO EDIT POST SPECIALTIES CONTROLLER ---------------------");
                 if (!ModelState.IsValid)
                     return View(pSpecialtie);
                 var result = await _specialtieBL.Update(pSpecialtie);
-                if (result != 0)
+                if (result != 0) 
+                {
+                    _logger.LogInformation("------------ REGISTRO EDITADO : EDIT POST SPECIALTES CONTROLLER --------------");
                     return RedirectToAction(nameof(Index));
+                }
+                    
                 else
                 {
+                    _logger.LogWarning("-------------- ERROR AL EDITAR : EDIT POST SPECIALTIES CONTROLLER -----------------");
                     ViewBag.ErrorMessage = "Error no se pudo modificar";
                     return View(pSpecialtie);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError("------------------- ERROR : " + ex.Message + " ---------------------");
                 return View(pSpecialtie);
             }
         }
@@ -109,20 +131,25 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation(" ---------------- INICIO METODO DELETE POST SPECIALTIES CONTROLLER ----------------");
                 if (!ModelState.IsValid)
                     return View(pSpecialtie);
 
                 int result = await _specialtieBL.Delete(Id);
-                if (result != 0)
+                if (result != 0) {
+                    _logger.LogInformation("------------- REGISTRO ELIMINADO : DELETE POST SPECIALTIES CONTROLLER ----------------");
                     return RedirectToAction(nameof(Index));
+                } 
                 else
                 {
+                    _logger.LogWarning("-------------- ERROR AL ELIMINAR REGISTRO : DELETE POST SPECIALTIES CONTROLLER --------------");
                     ViewBag.ErrorMessage = "Error no se pudo Eliminar";
                     return View(pSpecialtie);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError("-------------- ERROR : " + ex.Message + " -------------");
                 return View(pSpecialtie);
             }
         }

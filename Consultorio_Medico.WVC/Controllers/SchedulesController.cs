@@ -13,28 +13,32 @@ namespace Consultorio_Medico.MVC.Controllers
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Administrador")]
     public class SchedulesController : Controller
     {
-        readonly IScheduleBL _scheduleBL;
+        private readonly IScheduleBL _scheduleBL;
+        private readonly ILogger<SchedulesController> _logger;
 
-
-        public SchedulesController(IScheduleBL scheduleBL)
+        public SchedulesController(IScheduleBL scheduleBL, ILogger<SchedulesController> logger)
         {
             _scheduleBL = scheduleBL;
+            _logger = logger;
         }
 
         
         // GET: SchedulesController
         public async Task<ActionResult> Index(ScheduleSearchInputDTO schedules)
-        { 
+        {
 
-
+            _logger.LogInformation("---------------- INICIO METODO INDEX SCHEDULE CONTROLLER --------------------------");
             var list = await _scheduleBL.Search(schedules);
+            _logger.LogInformation("---------------- FIN METODO INDEX SCHEDULE CONTROLLER --------------------------");
             return View(list);
         }
 
         // GET: SchedulesController/Details/5
         public async Task<ActionResult> Details(int Id)
         {
+            _logger.LogInformation("-------------------- INICIO METODO DETAILS SCHEDULE CONTROLLER ------------------------");
             var Schedules = await _scheduleBL.GetById(Id);
+            _logger.LogInformation("---------------------- FIN METODO DETAILS SCHEDULE CONTROLLER --------------------------");
             return View(Schedules);
         }
 
@@ -52,11 +56,16 @@ namespace Consultorio_Medico.MVC.Controllers
 
             try
             {
+                _logger.LogInformation("---------------------- INICIO METODO CREATE POST DE SCHEDULE CONTROLLER ------------------------------");
                 int result = await _scheduleBL.Create(schedule);
                 if (result > 0)
+                {
+                    _logger.LogInformation("---------------------- FIN METODO CREATE POST DE SCHEDULE CONTROLLER ----------------------");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogInformation("--------------------- NO SE PUDO CREAR EL REGISTRO: CREATE POST DE SCHEDULE CONTROLLER ------------------");
                     ViewBag.ErrorMessage = "ERROR: NO SE REGISTRO";
                     return View(schedule);
                 }
@@ -64,6 +73,7 @@ namespace Consultorio_Medico.MVC.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogInformation("--------- ERROR : " + ex.Message + " ------------------------");
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
@@ -72,6 +82,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: SchedulesController/Edit/5
         public async Task<ActionResult> Edit(int Id)
         {
+            _logger.LogInformation("------------ INICIO METODO EDIT GET SCHEDULE CONTROLLER ---------------------");
             ScheduleSearchOutPutDTO schedule = await _scheduleBL.GetById(Id);
             var SchedResult = new ScheduleInputDTO()
             {
@@ -81,6 +92,7 @@ namespace Consultorio_Medico.MVC.Controllers
                 EndOfShift=schedule.EndOfShift,
 
             };
+            _logger.LogInformation(" --------------- FIN METODO EDIT GET SCHEDULE CONTROLLER ----------------------------");
             return View(SchedResult);
         }
 
@@ -91,17 +103,22 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("--------------- INICIO METODO EDIT POST SCHEDULE CONTROLLER ------------------------");
                 int result = await _scheduleBL.Update(schedule);
-                if (result > 0)
+                if (result > 0) {
+                    _logger.LogInformation("------------ FIN METODO EDIT POST SCHEDULE CONTROLLER: REGISTRO MODIFICADO ------------- ");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogInformation("------------- ERROR AL EDITAR REGISTRO : EDIT POST SCHEDULE CONTROLLER --------------------");
                     ViewBag.ErrorMessage = "ERROR: NO SE MODIFICO";
                     return View(schedule);
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogInformation("------ ERROR : " + ex.Message + " ---------------------------");
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
@@ -110,8 +127,9 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: SchedulesController/Delete/5
         public async Task<ActionResult> Delete(int Id)
         {
-
+            _logger.LogInformation("-------------- INICIO DE METODO DELETE GET SCHEDULE CONTROLLER ------------------------");
             ScheduleSearchOutPutDTO customer = await _scheduleBL.GetById(Id);
+            _logger.LogInformation("------------- FIN DE METODO DELETE GET SCHEDULE CONTROLLER ----------------------------");
             return View(customer);
         }
 
@@ -122,11 +140,15 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("-------------- INICIO DE METODO DELETE POST SCHEDULE CONTROLELR -----------------------");
                 int result = await _scheduleBL.Delete(Id);
-                if (result > 0)
+                if (result > 0) {
+                    _logger.LogInformation("---------- REGISTRO ELIMINADO CORRECTAMENTE : DELETE POST SCHEDULE CONTROLLER ------------------");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogInformation("---------------- ERROR AL ELIMINAR REGISTRO : DELETE POST SCHEDULE CONTROLLER ----------------------");
                     ViewBag.ErrorMessage = "ERROR: NO SE ELIMINO";
                     return View(schedule);
                 }
@@ -134,6 +156,7 @@ namespace Consultorio_Medico.MVC.Controllers
 
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
 
