@@ -14,19 +14,23 @@ namespace Consultorio_Medico.MVC.Controllers
     {
         private readonly ISecurityBL _securityBL;
         private readonly IRolBL _rolBL;
-        public SecurityController(ISecurityBL securityBL, IRolBL rolBL)
+        private readonly ILogger<SecurityController> _logger;
+        public SecurityController(ISecurityBL securityBL, IRolBL rolBL, ILogger<SecurityController> logger)
         {
             _securityBL = securityBL;
             _rolBL = rolBL;
+            _logger = logger;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Login(string ReturnUrl = null)
         {
+            _logger.LogInformation("---------- INICIO METODO LOGIN GET SECURITY CONTROLLER -------------");
             //Esta linea sirve para cerrar sesion. 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             ViewBag.Url = ReturnUrl;
             ViewBag.Error = "";
+            _logger.LogInformation("------- FIN METODO LOGIN GET SECURITY CONTROLLER -----------");
             return View();
         }
 
@@ -37,6 +41,7 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("---- INICIO METODO LOGIN POST SECURITY CONTROLLER ---------");
                 var pUser = _securityBL.Login(Login, Password);
 
                 //Condiciones que debe cumplir el usuario para tener credenciales correctas.
@@ -49,15 +54,24 @@ namespace Consultorio_Medico.MVC.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
                 }
                 else
+                {
+                    _logger.LogInformation($"---- LOGEO FALLIDO : LOGIN POST SECURITY CONTROLLER --------");
                     throw new Exception("Credenciales incorrectas");
+                }
                 if (!string.IsNullOrWhiteSpace(pReturnUrl))
+                {
+
                     return Redirect(pReturnUrl);
+                }
                 else
+                {
+                    _logger.LogInformation("------ FIN METODO LOGIN POST SECURITY CONTROLLER -----------");
                     return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception e)
             {
-
+                _logger.LogError("---- ERROR : " + e.Message + " ------------");
                 return RedirectToAction("AccesDenied", "Security");
             }
         }
@@ -67,79 +81,6 @@ namespace Consultorio_Medico.MVC.Controllers
             return View();
         }
 
-        // GET: SecurityController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: SecurityController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: SecurityController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: SecurityController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SecurityController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: SecurityController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SecurityController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: SecurityController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

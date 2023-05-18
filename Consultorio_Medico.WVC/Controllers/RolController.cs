@@ -15,23 +15,29 @@ namespace Consultorio_Medico.MVC.Controllers
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Administrador")]
     public class RolController : Controller
     {
-        readonly IRolBL _rolBL;
-        public RolController(IRolBL RolBL)
+        private readonly IRolBL _rolBL;
+        private readonly ILogger<RolController> _logger;
+        public RolController(IRolBL RolBL, ILogger<RolController> logger)
         {
             _rolBL = RolBL;
+            _logger = logger;
         }
        
         // GET: RolController
         public async Task<ActionResult> Index(RolSearchingInputDTO rol)
         {
+            _logger.LogInformation("-------- INICIO METODO INDEX ROL CONTROLLER -----------");
             var list = await _rolBL.Search(rol);
-                return View(list);  
+            _logger.LogInformation("------ FIN METODO INDEX ROL CONTROLLER --------");
+            return View(list);  
         }
 
         // GET: RolController/Details/5
         public async Task<ActionResult> Details(int Id)
         {
+            _logger.LogInformation("--------- INICIO METODO DETAILS ROL CONTROLLER -------");
             RolSearchingOutputDTO rol = await _rolBL.GetById(Id);
+            _logger.LogInformation("-------- FIN METODO INDEX ROL CONTROLLER -----------");
             return View(rol);
 
 
@@ -52,12 +58,15 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("------ INICIO METODO CREATE POST ROL CONTROLLER -------");
                 int result = await _rolBL.Create(pRol);
-                if (result > 0)
-
+                if (result > 0) {
+                    _logger.LogInformation("----- REGISTRO CREADO : CREATE POST ROL CONTROLLER -----");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogWarning("--- NO SE PUDO CREAR EL REGISTRO : CREATE POST ROL CONTROLLER -----");
                     ViewBag.ErrorMessage = "ERROR: NO SE REGISTRO";
                     return View(pRol);
                 }
@@ -65,6 +74,7 @@ namespace Consultorio_Medico.MVC.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("---- ERROR : " + ex.Message + " ----------");
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
@@ -73,7 +83,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: RolController/Edit/5
         public async Task<ActionResult>Edit(int id)
         {
-
+            _logger.LogInformation("--- INICIO METODO EDIT GET ROL CONTROLLER -------");
             RolSearchingOutputDTO rol = await _rolBL.GetById(id);
             var rolResults = new RolInputDTO()
             {
@@ -81,6 +91,7 @@ namespace Consultorio_Medico.MVC.Controllers
                 Name = rol.Name,
                 Status = rol.Status
             };
+            _logger.LogInformation("----- FIN METODO EDIT GET ROL CONTROLLER ----");
             return View(rolResults);
         }
 
@@ -91,17 +102,22 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("------- INICIO METODO EDIT POST ROL CONTROLLER ----------");
                 int result = await _rolBL.Update(pRol);
-                if (result > 0)
+                if (result > 0) {
+                    _logger.LogInformation("------ FIN METODO EDIT POST ROL CONTROLLER -------");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogWarning("--- NO SU PUDO EDITAR : EDIT POST ROL CONTROLLER");
                     ViewBag.ErrorMessage = "ERROR: NO SE MODIFICO";
                     return View(pRol);
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError("----- ERROR: " + ex.Message + " ---------");
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
@@ -110,7 +126,9 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: RolController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
+            _logger.LogInformation($"-- INICIO METODO DELETE GET ROL CONTROLLER ---");
             RolSearchingOutputDTO rol = await _rolBL.GetById(id);
+            _logger.LogInformation("----- FIN METODO DELETE GET ROL CONTROLLER ---");
             return View(rol);
         }
 
@@ -121,17 +139,23 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("------- INICIO METODO DELETE POST ROL CONTROLLER --------");
                 int result = await _rolBL.Delete(Id);
                 if (result > 0)
+                {
+                    _logger.LogInformation("------ FIN METODO DELETE POST ROL CONTROLLER ");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogWarning("--- NO SE ELIMINO EL REGISTRO : DELETE POST ROL CONTROLLER -----");
                     ViewBag.ErrorMessage = "ERROR: NO SE ELIMINO";
                     return View(result);
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError("---- ERROR : " + ex.Message + " ------");
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
