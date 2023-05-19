@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Consultorio_Medico.BL.DTOs.userDTO.userGetByIdDTO
+@model Consultorio_Medico.BL.DTOs.userDTO.userSearchOutputDTO
 @{
 
     ViewData["Title"] = "Create";
@@ -59,9 +59,9 @@
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="PhonNumber" class="control-label"></label>
-            <input asp-for="PhonNumber" class="form-control" disabled />
-            <span asp-validation-for="PhonNumber" class="text-danger"></span>
+            <label asp-for="PhoneNumber" class="control-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" disabled />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
             <label asp-for="Dui" class="control-label"></label>

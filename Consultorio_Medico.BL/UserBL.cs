@@ -94,17 +94,17 @@ namespace Consultorio_Medico.BL
 
         }
 
-        public async Task<userGetByIdDTO> GetById(int Id)
+        public async Task<userSearchOutputDTO> GetById(int Id)
         {
             Users UserEn = await _userDAL.GetById(Id);
-            return new userGetByIdDTO()
+            return new userSearchOutputDTO()
             {
                 UserId = UserEn.UserId,
                 RolId = UserEn.RolId,
                 WorkPlacesId = UserEn.WorkPlacesId,
                 Name= UserEn.Name,
                 LastName= UserEn.LastName,
-                PhonNumber = UserEn.PhonNumber,
+                PhoneNumber = UserEn.PhonNumber,
                 Dui = UserEn.Dui,
                 Email = UserEn.Email,
                 Login = UserEn.Login,

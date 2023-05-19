@@ -30,9 +30,9 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         [DisplayName("Email")]
         public string? Email { get; set; }
         [DisplayName("Estado")]
-        public int Status { get; set; }
+        public byte Status { get; set; }
         [DisplayName("Fecha Registro")]
-        public string FechaRegistro { get; set; }
+        public DateTime FechaRegistro { get; set; }
     }
 
 }

@@ -17,7 +17,7 @@ namespace Consultorio_Medico.BL.Interfaces
 
         Task<int> Delete(int Id);
 
-        Task<userGetByIdDTO> GetById(int Id);
+        Task<userSearchOutputDTO> GetById(int Id);
 
         Task<List<userSearchOutputDTO>> Search(userSearchInputDTO pUser);
        

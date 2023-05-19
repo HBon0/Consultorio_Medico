@@ -59,7 +59,7 @@ namespace Consultorio_Medico.MVC.Controllers
             var scheduleList = await _scheduleBL.Search(schedule);
             var Rollist = await _rolBL.Search(rol);
             var worklist = await _workPlaceBL.Search(workpalce);
-            userGetByIdDTO user = await _UserBL.GetById(Id);
+            var user = await _UserBL.GetById(Id);
 
             ViewBag.ErrorMessage = "";
             ViewBag.Specialties = specialtiesList;
@@ -150,7 +150,7 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Roles = Rollist;
             ViewBag.Workplace = worklist;
 
-            userGetByIdDTO Users = await _UserBL.GetById(Id);
+            var Users = await _UserBL.GetById(Id);
             var UserResults = new userUpdateDTO()
             {
                 
@@ -159,7 +159,7 @@ namespace Consultorio_Medico.MVC.Controllers
                 WorkplacesId = Users.WorkPlacesId,
                 Name = Users.Name,  
                 LastName = Users.LastName,
-                PhonNumber = Users.PhonNumber,
+                PhonNumber = Users.PhoneNumber,
                 Dui = Users.Dui,
                 Email = Users.Email,
                 Login = Users.Login,
@@ -237,7 +237,7 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Roles = Rollist;
             ViewBag.Workplace = worklist;
 
-            userGetByIdDTO User = await _UserBL.GetById(Id);
+            var User = await _UserBL.GetById(Id);
             _logger.LogInformation("---- FIN METODO DELETE GET USER CONTROLLER ----");
             return View(User);
         }
@@ -245,7 +245,7 @@ namespace Consultorio_Medico.MVC.Controllers
         //  UserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int Id, userGetByIdDTO pUser)
+        public async Task<ActionResult> Delete(int Id, userSearchOutputDTO pUser)
         {
             try
             {
