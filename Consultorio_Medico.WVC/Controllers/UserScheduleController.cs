@@ -20,25 +20,31 @@ namespace Consultorio_Medico.MVC.Controllers
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Administrador")]
     public class UserScheduleController : Controller
     {
-        readonly IUserSchedulesBL _userSchedBL;
-        readonly IUserBL _UserBL;
-        readonly IScheduleBL _scheduleBL;
-        public UserScheduleController(IUserSchedulesBL UserChedBL, IUserBL UserBL, IScheduleBL scheduleBL)
+        private readonly IUserSchedulesBL _userSchedBL;
+        private readonly IUserBL _UserBL;
+        private readonly IScheduleBL _scheduleBL;
+        private readonly ILogger<UserScheduleController> _logger;
+
+        public UserScheduleController(IUserSchedulesBL UserChedBL, IUserBL UserBL, IScheduleBL scheduleBL, ILogger<UserScheduleController> logger)
            {
             _UserBL = UserBL;
             _userSchedBL = UserChedBL;
             _scheduleBL = scheduleBL;
+            _logger = logger;
         }
         // GET: UserScheduleController
         public async Task<ActionResult> Index(UserScheduleSearchInpuntDTO UserChed) 
         {
+            _logger.LogInformation("---- INICIO METODO INDEX USER SCHEDULE CONTROLLER ----");
             var list = await _userSchedBL.Search(UserChed);
+            _logger.LogInformation("---- FIN METODO INDEX USER SCHEDULE CONTROLLER -----");
             return View(list);
         }
 
         // GET: UserScheduleController/Details/5
         public async Task<ActionResult> Details(int Id)
         {
+            _logger.LogInformation("---- INICIO METODO DETAILS USER SCHEDULE CONTROLLER -----");
             ScheduleSearchInputDTO sched = new ScheduleSearchInputDTO();
             userSearchInputDTO userId = new userSearchInputDTO();
             var schedList = await _scheduleBL.Search(sched);
@@ -49,6 +55,7 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Horarios = schedList;
 
             var userSchedule = await _userSchedBL.GetById(Id);
+            _logger.LogInformation("---- FIN METODO DETAILS USER SCHEDULE CONTROLLER -----");
             return View(userSchedule);
         }
 
@@ -72,12 +79,16 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("---- INICIO METODO CREATE POST USER SCHEDULE CONTROLLER ----");
                 int result = await _userSchedBL.Create(pUserSched);
                 if (result > 0)
-
+                {
+                    _logger.LogInformation("--- FIN METODO CREATE POST USER SCHEDULE CONTROLLER ----");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogWarning("---- NO SE PUDO CREAR : CREATE POST USER SCHEDULE CONTROLLER ----");
                     ViewBag.ErrorMessage = "ERROR: NO SE REGISTRO";
                     return View(pUserSched);
                 }
@@ -85,6 +96,7 @@ namespace Consultorio_Medico.MVC.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("---- ERROR : " + ex.Message + " -----");
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
@@ -93,6 +105,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: UserScheduleController/Edit/5
         public async Task<ActionResult> Edit(int Id)
         {
+            _logger.LogInformation("---- INICIO METODO EDIT GET USER SCHEDULE CONTROLLER ----");
             ScheduleSearchInputDTO sched = new ScheduleSearchInputDTO();
             userSearchInputDTO userId = new userSearchInputDTO();
             var schedList = await _scheduleBL.Search(sched);
@@ -103,6 +116,7 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Horarios = schedList;
 
             var UserSchedule = await _userSchedBL.GetById(Id);
+            _logger.LogInformation("---- FIN METODO EDIT GET USER SCHEDULE CONTROLLER ----");
             return View(new UserScheduleInputDTO
             {
                 UserScheduleId = UserSchedule.UserSchedulesId,
@@ -118,20 +132,26 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("---- INICIO METODO EDIT POST USER SCHEDULE CONTROLLER ----");
                 if (!ModelState.IsValid)
                     return View(pUserSchedule);
                 int result = await _userSchedBL.Update(pUserSchedule);
 
                 if (result > 0)
-                    return RedirectToAction(nameof(Index));
-                else 
                 {
+                    _logger.LogInformation("---- FIN METODO EDIT POST USER SCHEDULE CONTROLLER ----");
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    _logger.LogWarning("---- NO SE EDITO : EDIT POST USER SCHEDULE CONTROLLER ----");
                     ViewBag.ErrorMessage = "Error al Modificar registro. ";
                     return View(pUserSchedule);
                 };
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError("---- ERROR : " + ex.Message + " ----");
                 return View();
             }
         }
@@ -139,6 +159,7 @@ namespace Consultorio_Medico.MVC.Controllers
         // GET: UserScheduleController/Delete/5
         public async  Task<ActionResult> Delete(int Id)
         {
+            _logger.LogInformation("---- INICIO METODO DELETE GET USER SCHEDULE CONTROLLER ----");
             ScheduleSearchInputDTO sched = new ScheduleSearchInputDTO();
             userSearchInputDTO userId = new userSearchInputDTO();
             var schedList = await _scheduleBL.Search(sched);
@@ -149,6 +170,7 @@ namespace Consultorio_Medico.MVC.Controllers
             ViewBag.Horarios = schedList;
 
             var UserSchedule = await _userSchedBL.GetById(Id);
+            _logger.LogInformation("---- FIN METODO DELETE GET USER SCHEDULE CONTROLLER ----");
             return View(new UserScheduleSearchOutputDTO
             {
                 UserSchedulesId = UserSchedule.UserSchedulesId,
@@ -164,20 +186,26 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             try
             {
+                _logger.LogInformation("---- INICIO METODO DELETE POST USER SCHEDULE CONTROLLER ----");
                 if (!ModelState.IsValid)
                     return View(pUserSchedule);
                 int result = await _userSchedBL.Delete(Id);
 
                 if (result > 0)
+                {
+                    _logger.LogInformation("---- FIN METODO DELETE POST USER SCHEDULE CONTROLLER ----");
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
+                    _logger.LogWarning("---- NO SE ELIMNO : DELETE POST USER SCHEDULE CONTROLLER ---");
                     ViewBag.ErrorMessage = "Error al Eliminar registro. ";
                     return View(pUserSchedule);
                 };
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError("--- ERROR : " + ex.Message + " ----");
                 return View(pUserSchedule);
             }
         }
