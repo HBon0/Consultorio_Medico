@@ -100,7 +100,7 @@ namespace Consultorio_Medico.API.Controllers
             {
                 _logger.LogInformation("---- INICIO METODO PUT WORKPLACES ----");
 
-                var workplace = await _workPlaceBL.Create(pWorkplace);
+                var workplace = await _workPlaceBL.Update(pWorkplace);
                 if (workplace > 0)
                 {
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Modificacion correcta", new WorkPlaceSearchOutPutDTO()
