@@ -82,7 +82,7 @@ namespace Consultorio_Medico.MVC.Controllers
             return View(new SpecialtiesInputDTO
             {
                 Id = Specialtie.Id,
-                Specialtie = Specialtie.Specialties
+                Specialtie = Specialtie.Specialtie
             });
         }
 

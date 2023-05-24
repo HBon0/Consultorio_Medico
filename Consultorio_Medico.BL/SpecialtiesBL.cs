@@ -84,7 +84,7 @@ namespace Consultorio_Medico.BL
                 return new SpecialtiesOutputDTO()
                 {
                     Id = specialties.SpecialtiesId,
-                    Specialties = specialties.Specialty
+                    Specialtie = specialties.Specialty
                 };
             } 
             catch (Exception e)
@@ -107,7 +107,7 @@ namespace Consultorio_Medico.BL
                 specialties.ForEach(s => SpecialtiesOutput.Add(new SpecialtiesOutputDTO
                 {
                     Id = s.SpecialtiesId,
-                    Specialties = s.Specialty
+                    Specialtie = s.Specialty
                 }));
                 return SpecialtiesOutput;
             } 
@@ -126,7 +126,7 @@ namespace Consultorio_Medico.BL
             specialties.ForEach(s => specialtiesOutputDTOs.Add(new SpecialtiesOutputDTO
             {
                 Id= s.SpecialtiesId,
-                Specialties = s.Specialty
+                Specialtie = s.Specialty
             }));
             return specialtiesOutputDTOs;
         }
