@@ -41,7 +41,7 @@ namespace Consultorio_Medico.API.Controllers
 
         // GET api/<SchedulesController>/5
         [HttpGet("{Id}")]
-        public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> Get(int Id)
+        public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> GetById(int Id)
         {
             _logger.LogInformation("---- INICIO METODO GET BY ID SCHEDULES ----");
             var schedule = await _scheduleBL.GetById(Id);
