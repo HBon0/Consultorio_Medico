@@ -15,7 +15,7 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         [ForeignKey("Rol")]
         [Required(ErrorMessage = "Rol es obligatorio.")]
         [Display(Name = "Rol")]
-        public int IdRol { get; set; }
+        public int RolId { get; set; }
         [ForeignKey("WorkPlace2")]
         [Required(ErrorMessage = "El lugar de trabajo es obligatorio.")]
         [Display(Name = "WorkPlace")]
@@ -31,7 +31,7 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         [Required(ErrorMessage = "Teléfono es obligatorio.")]
         [StringLength(10, ErrorMessage = "Maximo 10 caracteres")]
         [Display(Name = "Teléfono")]
-        public string PhonNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "El Dui es obligatorio.")]
         [StringLength(25, ErrorMessage = "Maximo 25 caracteres")]

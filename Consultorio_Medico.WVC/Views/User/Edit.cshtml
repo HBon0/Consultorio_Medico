@@ -21,8 +21,8 @@
             <input asp-for="UserId" hidden/>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="IdRol" class="control-label"></label>
-            <select asp-for="IdRol" class="form-control">
+            <label asp-for="RolId" class="control-label"></label>
+            <select asp-for="RolId" class="form-control">
                 <option selecter>
                     SELECCIONAR ROL
                 </option>
@@ -31,7 +31,7 @@
                     <option value=@item.RolId>@item.Name</option>
                 }
             </select>
-            <span asp-validation-for="IdRol" class="text-danger"></span>
+            <span asp-validation-for="RolId" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
             <label asp-for="WorkplacesId" class="control-label"></label>
@@ -61,9 +61,9 @@
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="PhonNumber" class="control-label"></label>
-            <input asp-for="PhonNumber" class="form-control" />
-            <span asp-validation-for="PhonNumber" class="text-danger"></span>
+            <label asp-for="PhoneNumber" class="control-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
             <label asp-for="Dui" class="control-label"></label>

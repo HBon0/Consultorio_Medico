@@ -41,7 +41,7 @@ namespace Consultorio_Medico.BL
                     WorkPlacesId = pUser.WorkplacesId,
                     Name = pUser.Name,
                     LastName = pUser.LastName,
-                    PhonNumber = pUser.PhonNumber,
+                    PhoneNumber = pUser.PhoneNumber,
                     Dui = pUser.Dui,
                     Email = pUser.Email,
                     Login = pUser.Login,
@@ -104,7 +104,7 @@ namespace Consultorio_Medico.BL
                 WorkPlacesId = UserEn.WorkPlacesId,
                 Name= UserEn.Name,
                 LastName= UserEn.LastName,
-                PhoneNumber = UserEn.PhonNumber,
+                PhoneNumber = UserEn.PhoneNumber,
                 Dui = UserEn.Dui,
                 Email = UserEn.Email,
                 Login = UserEn.Login,
@@ -117,16 +117,16 @@ namespace Consultorio_Medico.BL
 
         public async Task<List<userSearchOutputDTO>> Search(userSearchInputDTO pUser)
         {
-            List<Users> users = await _userDAL.Search(new Users { Name = pUser.NameLike, PhonNumber = pUser.PhonNumberLike });
+            List<Users> users = await _userDAL.Search(new Users { Name = pUser.NameLike, PhoneNumber = pUser.PhonNumberLike });
             List<userSearchOutputDTO> list = new List<userSearchOutputDTO>();
             users.ForEach(s => list.Add(new userSearchOutputDTO
             {
                 UserId = s.UserId,
-                RolId = s.UserId,
+                RolId = s.RolId,
                WorkPlacesId=s.WorkPlacesId,
                 Name = s.Name,
                 LastName = s.LastName,
-                PhoneNumber = s.PhonNumber,
+                PhoneNumber = s.PhoneNumber,
                 Dui = s.Dui,
                 Email = s.Email,
                 Status = s.Status,
@@ -145,11 +145,11 @@ namespace Consultorio_Medico.BL
                 if (UserEn.UserId == pUser.UserId)
                 {
                     UserEn.UserId = pUser.UserId;
-                    UserEn.RolId = pUser.IdRol;
+                    UserEn.RolId = pUser.RolId ;
                     UserEn.WorkPlacesId = pUser.WorkplacesId;
                     UserEn.Name = pUser.Name;
                     UserEn.LastName = pUser.LastName;
-                    UserEn.PhonNumber = pUser.PhonNumber;
+                    UserEn.PhoneNumber = pUser.PhoneNumber;
                     UserEn.Dui = pUser.Dui;
                     UserEn.Email = pUser.Email;
                     UserEn.Login = pUser.Login;

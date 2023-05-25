@@ -47,8 +47,8 @@ namespace Consultorio_Medico.DAL
         public async Task<List<Users>> Search(Users pUser)
         {
             var query = DbContext.Users.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(pUser.PhonNumber))
-                query = query.Where(s => s.PhonNumber == pUser.PhonNumber);
+            if (!string.IsNullOrWhiteSpace(pUser.PhoneNumber))
+                query = query.Where(s => s.PhoneNumber == pUser.PhoneNumber);
             if (!string.IsNullOrWhiteSpace(pUser.Name))
                 query = query.Where(s => s.Name == pUser.Name);
             if (!string.IsNullOrWhiteSpace(pUser.Name))

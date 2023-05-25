@@ -155,11 +155,11 @@ namespace Consultorio_Medico.MVC.Controllers
             {
                 
                 UserId = Users.UserId,
-                IdRol = Users.RolId,
+                RolId = Users.RolId,
                 WorkplacesId = Users.WorkPlacesId,
                 Name = Users.Name,  
                 LastName = Users.LastName,
-                PhonNumber = Users.PhoneNumber,
+                PhoneNumber = Users.PhoneNumber,
                 Dui = Users.Dui,
                 Email = Users.Email,
                 Login = Users.Login,
