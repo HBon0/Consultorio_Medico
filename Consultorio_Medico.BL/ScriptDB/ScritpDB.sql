@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[Users] (
 	[WorkplaceId] [int] NOT NULL,
 	[Name] [varchar](50) NOT NULL,
 	[LastName] [varchar](50) NOT NULL,
-	[PhonNumber] [varchar](10) NOT NULL,
+	[PhoneNumber] [varchar](10) NOT NULL,
 	[Dui] [varchar](25) NOT NULL,
 	[Email] [varchar](25) NOT NULL,
 	[Login] [varchar](25) NOT NULL,
@@ -36,7 +36,7 @@ GO
 CREATE TABLE [dbo].[Schedules](
 [SchedulesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 [DayName] [varchar] (50) NOT NULL,
-[StarShift] [decimal (10,2)] NOT NUll,
+[StartOfShift] [decimal (10,2)] NOT NUll,
 [EndOfShift] [decimal (10,2)] NOT NULL
 )
 GO

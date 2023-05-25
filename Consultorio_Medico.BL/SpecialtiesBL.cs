@@ -26,7 +26,7 @@ namespace Consultorio_Medico.BL
             {
                 Specialties specialties = new Specialties()
                 {
-                    Specialty = pSpecialties.Specialtie
+                    Specialty = pSpecialties.Specialty
                 };
 
                 _specialties.Create(specialties);
@@ -46,7 +46,7 @@ namespace Consultorio_Medico.BL
                 Specialties specialtie =  await _specialties.GetById(pSpecialties.Id);
                 if (specialtie.SpecialtiesId == pSpecialties.Id)
                 {
-                    specialtie.Specialty = pSpecialties.Specialtie;
+                    specialtie.Specialty = pSpecialties.Specialty;
                     _specialties.Update(specialtie);
                     return await _unitOfWork.SaveChangesAsync();
                 }
@@ -84,7 +84,7 @@ namespace Consultorio_Medico.BL
                 return new SpecialtiesOutputDTO()
                 {
                     Id = specialties.SpecialtiesId,
-                    Specialtie = specialties.Specialty
+                    Specialty = specialties.Specialty
                 };
             } 
             catch (Exception e)
@@ -101,13 +101,13 @@ namespace Consultorio_Medico.BL
                 List<Specialties> specialties = await _specialties.Search(new Specialties
                 {
                     SpecialtiesId = pSpecialties.Id,
-                    Specialty = pSpecialties.Specialtie
+                    Specialty = pSpecialties.Specialty
                 });
 
                 specialties.ForEach(s => SpecialtiesOutput.Add(new SpecialtiesOutputDTO
                 {
                     Id = s.SpecialtiesId,
-                    Specialtie = s.Specialty
+                    Specialty = s.Specialty
                 }));
                 return SpecialtiesOutput;
             } 
@@ -126,7 +126,7 @@ namespace Consultorio_Medico.BL
             specialties.ForEach(s => specialtiesOutputDTOs.Add(new SpecialtiesOutputDTO
             {
                 Id= s.SpecialtiesId,
-                Specialtie = s.Specialty
+                Specialty = s.Specialty
             }));
             return specialtiesOutputDTOs;
         }

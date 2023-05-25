@@ -66,7 +66,7 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Creacion correcta", new SpecialtiesOutputDTO()
                     {
                         Id = pSpecialtie.Id,
-                        Specialtie = pSpecialtie.Specialtie
+                        Specialty = pSpecialtie.Specialty
                     });
                     _logger.LogInformation("---- FIN METODO POST SPECIALTIE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -76,7 +76,7 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", new SpecialtiesOutputDTO()
                     {
                         Id = pSpecialtie.Id,
-                        Specialtie = pSpecialtie.Specialtie
+                        Specialty = pSpecialtie.Specialty
                     });
                     _logger.LogWarning("---- ERROR EN METODO POST SPECIALTIE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -88,7 +88,7 @@ namespace Consultorio_Medico.API.Controllers
                 var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new SpecialtiesOutputDTO()
                 {
                     Id = pSpecialtie.Id,
-                    Specialtie = pSpecialtie.Specialtie
+                    Specialty = pSpecialtie.Specialty
                 });
                 return DTOGenRes;
             }
@@ -108,7 +108,7 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Creacion correcta", new SpecialtiesOutputDTO()
                     {
                         Id = pSpecialtie.Id,
-                        Specialtie = pSpecialtie.Specialtie
+                        Specialty = pSpecialtie.Specialty
                     });
                     _logger.LogInformation("---- FIN METODO PUT SPECIALTIE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -118,7 +118,7 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", new SpecialtiesOutputDTO()
                     {
                         Id = pSpecialtie.Id,
-                        Specialtie = pSpecialtie.Specialtie
+                        Specialty = pSpecialtie.Specialty
                     });
                     _logger.LogWarning("---- ERROR EN METODO PUT SPECIALTIE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -130,7 +130,7 @@ namespace Consultorio_Medico.API.Controllers
                 var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new SpecialtiesOutputDTO()
                 {
                     Id = pSpecialtie.Id,
-                    Specialtie = pSpecialtie.Specialtie
+                    Specialty = pSpecialtie.Specialty
                 });
                 return DTOGenRes;
             }

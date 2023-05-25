@@ -9,6 +9,6 @@ namespace Consultorio_Medico.BL.DTOs.SpecialtiesDTO
     public class SpecialtiesInputDTO
     {
         public int Id { get; set; }
-        public string Specialtie { get; set; }
+        public string Specialty { get; set; }
     }
 }
