@@ -38,7 +38,7 @@ namespace Consultorio_Medico.BL
                 {
 
                     RolId = pUser.RolId,
-                    WorkPlacesId = pUser.WorkplacesId,
+                    WorkplaceId = pUser.WorkplaceId,
                     Name = pUser.Name,
                     LastName = pUser.LastName,
                     PhoneNumber = pUser.PhoneNumber,
@@ -101,7 +101,7 @@ namespace Consultorio_Medico.BL
             {
                 UserId = UserEn.UserId,
                 RolId = UserEn.RolId,
-                WorkPlacesId = UserEn.WorkPlacesId,
+                WorkplaceId = UserEn.WorkplaceId,
                 Name= UserEn.Name,
                 LastName= UserEn.LastName,
                 PhoneNumber = UserEn.PhoneNumber,
@@ -123,7 +123,7 @@ namespace Consultorio_Medico.BL
             {
                 UserId = s.UserId,
                 RolId = s.RolId,
-               WorkPlacesId=s.WorkPlacesId,
+                WorkplaceId = s.WorkplaceId,
                 Name = s.Name,
                 LastName = s.LastName,
                 PhoneNumber = s.PhoneNumber,
@@ -146,7 +146,7 @@ namespace Consultorio_Medico.BL
                 {
                     UserEn.UserId = pUser.UserId;
                     UserEn.RolId = pUser.RolId ;
-                    UserEn.WorkPlacesId = pUser.WorkplacesId;
+                    UserEn.WorkplaceId = pUser.WorkplaceId;
                     UserEn.Name = pUser.Name;
                     UserEn.LastName = pUser.LastName;
                     UserEn.PhoneNumber = pUser.PhoneNumber;

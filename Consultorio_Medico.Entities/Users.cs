@@ -14,7 +14,7 @@ namespace Consultorio_Medico.Entities
         [ForeignKey("Rol")]
         public int RolId { get; set; }
         [ForeignKey("WorkPlace")]
-        public int WorkPlacesId { get; set; }
+        public int WorkplaceId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

@@ -27,8 +27,8 @@
             <span asp-validation-for="RolId" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="WorkplacesId" class="control-label"></label>
-            <select asp-for="WorkplacesId" class="form-control">
+            <label asp-for="WorkplaceId" class="control-label"></label>
+            <select asp-for="WorkplaceId" class="form-control">
                 <option selecter>
                     LUGAR DE TRABAJO
                 </option>
@@ -37,7 +37,7 @@
                     <option value=@item.WorkPlacesId>@item.WorkPlaces</option>
                 }
             </select>
-            <span asp-validation-for="WorkplacesId" class="text-danger"></span>
+            <span asp-validation-for="WorkplaceId" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
             <label asp-for="Name" class="control-label"></label>

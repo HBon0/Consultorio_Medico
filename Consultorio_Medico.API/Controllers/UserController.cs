@@ -69,7 +69,7 @@ namespace Consultorio_Medico.API.Controllers
                     {
                         
                         RolId = pUser.RolId,
-                        WorkPlacesId = pUser.WorkplacesId,
+                        WorkplaceId = pUser.WorkplaceId,
                         Name = pUser.Name,
                         LastName = pUser.LastName,
                         PhoneNumber = pUser.PhoneNumber,
@@ -87,7 +87,7 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", new userSearchOutputDTO()
                     {
                         RolId = pUser.RolId,
-                        WorkPlacesId = pUser.WorkplacesId,
+                        WorkplaceId = pUser.WorkplaceId,
                         Name = pUser.Name,
                         LastName = pUser.LastName,
                         PhoneNumber = pUser.PhoneNumber,
@@ -107,7 +107,7 @@ namespace Consultorio_Medico.API.Controllers
                 var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new userSearchOutputDTO()
                 {
                     RolId = pUser.RolId,
-                    WorkPlacesId = pUser.WorkplacesId,
+                    WorkplaceId = pUser.WorkplaceId,
                     Name = pUser.Name,
                     LastName = pUser.LastName,
                     PhoneNumber = pUser.PhoneNumber,
@@ -136,7 +136,7 @@ namespace Consultorio_Medico.API.Controllers
                     {
 
                         RolId = pUser.RolId,
-                        WorkPlacesId = pUser.WorkplacesId,
+                        WorkplaceId = pUser.WorkplaceId,
                         Name = pUser.Name,
                         LastName = pUser.LastName,
                         PhoneNumber = pUser.PhoneNumber,
@@ -153,7 +153,7 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", new userSearchOutputDTO()
                     {
                         RolId = pUser.RolId,
-                        WorkPlacesId = pUser.WorkplacesId,
+                        WorkplaceId = pUser.WorkplaceId,
                         Name = pUser.Name,
                         LastName = pUser.LastName,
                         PhoneNumber = pUser.PhoneNumber,
@@ -172,7 +172,7 @@ namespace Consultorio_Medico.API.Controllers
                 var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new userSearchOutputDTO()
                 {
                     RolId = pUser.RolId,
-                    WorkPlacesId = pUser.WorkplacesId,
+                    WorkplaceId = pUser.WorkplaceId,
                     Name = pUser.Name,
                     LastName = pUser.LastName,
                     PhoneNumber = pUser.PhoneNumber,

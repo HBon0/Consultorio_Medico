@@ -19,7 +19,7 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         [ForeignKey("WorkPlace2")]
         [Required(ErrorMessage = "El lugar de trabajo es obligatorio.")]
         [Display(Name = "WorkPlace")]
-        public int WorkplacesId { get; set; }
+        public int WorkplaceId { get; set; }
 
         [Required(ErrorMessage = "Nombre es obligatorio.")]
         [StringLength(50, ErrorMessage = "Maximo 50 caracteres")]

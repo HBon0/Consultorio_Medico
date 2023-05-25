@@ -14,7 +14,7 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         [DisplayName("Rol")]
         public int RolId { get; set; }
         [DisplayName("Lugar de Trabajo")]
-        public int WorkPlacesId { get; set; }
+        public int WorkplaceId { get; set; }
         public string WorkPlaceName { get; set; }
         public string RolName { get; set; }
         [DisplayName("Nombre")]

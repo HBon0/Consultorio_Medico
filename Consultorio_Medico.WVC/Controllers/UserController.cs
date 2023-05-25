@@ -156,7 +156,7 @@ namespace Consultorio_Medico.MVC.Controllers
                 
                 UserId = Users.UserId,
                 RolId = Users.RolId,
-                WorkplacesId = Users.WorkPlacesId,
+                WorkplaceId = Users.WorkplaceId,
                 Name = Users.Name,  
                 LastName = Users.LastName,
                 PhoneNumber = Users.PhoneNumber,
