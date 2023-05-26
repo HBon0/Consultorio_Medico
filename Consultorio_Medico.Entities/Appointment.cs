@@ -18,7 +18,7 @@ namespace Consultorio_Medico.Entities
         public int SpecialtieId { get; set; }
         [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        public string Name { get; set; }
+        public string Appointment_Name { get; set; }
         public string Reason { get; set; }
         public DateTime Appointment_date { get; set; }
         public decimal Appointment_Hour { get; set; }

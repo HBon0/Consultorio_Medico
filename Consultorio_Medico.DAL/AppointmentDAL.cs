@@ -42,8 +42,8 @@ namespace Consultorio_Medico.DAL
         {
 
             var query = _context.Appointment.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(pAppoitment.Name))
-                query = query.Where(s => s.Name.Contains(pAppoitment.Name));
+            if (!string.IsNullOrWhiteSpace(pAppoitment.Appointment_Name))
+                query = query.Where(s => s.Appointment_Name.Contains(pAppoitment.Appointment_Name));
             if (pAppoitment.Shift == true || pAppoitment.Shift == false)
                 query = query.Where(s => s.Shift == pAppoitment.Shift);
             if (!string.IsNullOrWhiteSpace(pAppoitment.Reason))

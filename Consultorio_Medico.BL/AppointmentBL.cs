@@ -29,7 +29,7 @@ namespace Consultorio_Medico.BL
                     UserId = pAppointment.UserId,
                     SpecialtieId = pAppointment.SpecialtieId,
                     PatientId = pAppointment.PatientId,
-                    Name = pAppointment.Name,
+                    Appointment_Name = pAppointment.Appointment_Name,
                     Reason = pAppointment.Reason,
                     Appointment_date = pAppointment.Appointment_date,
                     Appointment_Hour = pAppointment.Appointment_Hour,
@@ -53,7 +53,7 @@ namespace Consultorio_Medico.BL
                     appointment.UserId = pAppointment.UserId;
                     appointment.SpecialtieId = pAppointment.SpecialtieId;
                     appointment.PatientId = pAppointment.PatientId;
-                    appointment.Name = pAppointment.Name;
+                    appointment.Appointment_Name = pAppointment.Appointment_Name;
                     appointment.Reason = pAppointment.Reason;
                     appointment.Appointment_date = pAppointment.Appointment_date;
                     appointment.Appointment_Hour = pAppointment.Appointment_Hour;
@@ -98,7 +98,7 @@ namespace Consultorio_Medico.BL
                     SpecialtieName = appointment.Specialties.Specialty,
                     PatientId = appointment.PatientId,
                     PatientName = appointment.Patient.Name + " " + appointment.Patient.LastName,
-                    Name = appointment.Name,
+                    Appointment_Name = appointment.Appointment_Name,
                     Reason = appointment.Reason,
                     Appointment_date = appointment.Appointment_date,
                     Appointment_Hour = appointment.Appointment_Hour,
@@ -128,7 +128,7 @@ namespace Consultorio_Medico.BL
                     PatientId= s.PatientId,
                     PatientName = s.Patient.Name + " " + s.Patient.LastName,
                     Reason= s.Reason,
-                    Name = s.Name,
+                    Appointment_Name = s.Appointment_Name,
                     Appointment_date= s.Appointment_date,
                     Appointment_Hour = s.Appointment_Hour,
                     Shift = s.Shift,
@@ -150,7 +150,7 @@ namespace Consultorio_Medico.BL
                     UserId = pAppointmentSearch.UserId,
                     SpecialtieId = pAppointmentSearch.SpecialtieId,
                     PatientId = pAppointmentSearch.PatientId,
-                    Name = pAppointmentSearch.Name,
+                    Appointment_Name = pAppointmentSearch.Appointment_Name,
                     Reason = pAppointmentSearch.Reason,
                     Shift = pAppointmentSearch.Shift,
                     Status = pAppointmentSearch.Status,
@@ -166,7 +166,7 @@ namespace Consultorio_Medico.BL
                     PatientId = s.PatientId,
                     PatientName = s.Patient.Name + " " + s.Patient.LastName,
                     Reason = s.Reason,
-                    Name = s.Name,
+                    Appointment_Name = s.Appointment_Name,
                     Appointment_date = s.Appointment_date,
                     Appointment_Hour = s.Appointment_Hour,
                     Shift = s.Shift,
