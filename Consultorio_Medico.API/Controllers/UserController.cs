@@ -49,7 +49,7 @@ namespace Consultorio_Medico.API.Controllers
 
             var user = await _userBL.GetById(Id);
             
-            var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Obtencion de todos los registros", user);
+            var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, $"Obtencion del registro con Id {Id} registros", user);
             _logger.LogInformation("---- FIN METODO GET USER CONTROLLER ----");
             return pDTOGenResponse;
         }

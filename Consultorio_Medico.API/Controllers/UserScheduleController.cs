@@ -1,7 +1,9 @@
 ﻿using Consultorio_Medico.API.DTOs;
+using Consultorio_Medico.BL;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.DTOs.UserSchedule;
 using Consultorio_Medico.BL.Interfaces;
+using Consultorio_Medico.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,34 +29,149 @@ namespace Consultorio_Medico.API.Controllers
 
         // GET: api/<UserScheduleController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<DTOGenericResponse<List<UserScheduleSearchOutputDTO>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            _logger.LogInformation("---- INICIO METODO GET USERSCHEDULE CONTROLLER ----");
+
+            UserScheduleSearchInpuntDTO userSchedule = new UserScheduleSearchInpuntDTO();
+            var usersSched = await _userScheduleBL.Search(userSchedule);
+
+            var DTOGenResponse = ListDTOresponse.GetGenericResponse(true, "Obtencion de todos los registros", usersSched);
+            _logger.LogInformation("---- FIN METODO GET USERSCHEDULE CONTROLLER ----");
+            return DTOGenResponse;
         }
 
         // GET api/<UserScheduleController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{Id}")]
+        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Get(int Id)
         {
-            return "value";
+            _logger.LogInformation("---- INICIO METODO GET USERSCHEDULE CONTROLLER ----");
+
+            var userSchedule = await _userScheduleBL.GetById(Id);
+
+            var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, $"Obtencion del Registro con Id {Id} registros", userSchedule);
+            _logger.LogInformation("---- FIN METODO GET USERSCHEDULE CONTROLLER ----");
+            return pDTOGenResponse;
         }
 
         // POST api/<UserScheduleController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Post(UserScheduleInputDTO pUserSchedule)
         {
+            try
+            {
+                _logger.LogInformation("---- INICIO METODO POST USERSCHEDULE API CONTROLLER ----");
+
+                var userSchedule = await _userScheduleBL.Create(pUserSchedule);
+                if (userSchedule > 0)
+                {
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Creacion correcta", new UserScheduleSearchOutputDTO()
+                    {
+                        UserSchedulesId = pUserSchedule.SchedulesId,
+                        UserId = pUserSchedule.UserId,
+                        SchedulesId = pUserSchedule.SchedulesId
+                    });
+                    _logger.LogInformation("---- FIN METODO POST USERSCHEDULE API CONTROLLER ----");
+                    return pDTOGenResponse;
+                }
+                else
+                {
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", new UserScheduleSearchOutputDTO()
+                    {
+                        UserSchedulesId = pUserSchedule.SchedulesId,
+                        UserId = pUserSchedule.UserId,
+                        SchedulesId = pUserSchedule.SchedulesId
+                    });
+                    _logger.LogWarning("---- ERROR EN METODO POST USERSCHEDULE API CONTROLLER ----");
+                    return pDTOGenResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("--- ERROR : " + ex.Message + " ----");
+                var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new UserScheduleSearchOutputDTO()
+                {
+                    UserSchedulesId = pUserSchedule.SchedulesId,
+                    UserId = pUserSchedule.UserId,
+                    SchedulesId = pUserSchedule.SchedulesId
+                });
+                return DTOGenRes;
+            }
         }
 
         // PUT api/<UserScheduleController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{Id}")]
+        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Put(int Id, UserScheduleInputDTO pUserSchedule)
         {
+            try
+            {
+                _logger.LogInformation("---- INICIO METODO POST USERSCHEDULE API CONTROLLER ----");
+
+                var userSchedule = await _userScheduleBL.Update(pUserSchedule);
+                if (userSchedule > 0)
+                {
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "modificacion correcta", new UserScheduleSearchOutputDTO()
+                    {
+                        UserSchedulesId = pUserSchedule.SchedulesId,
+                        UserId = pUserSchedule.UserId,
+                        SchedulesId = pUserSchedule.SchedulesId
+                    });
+                    _logger.LogInformation("---- FIN METODO POST USERSCHEDULE API CONTROLLER ----");
+                    return pDTOGenResponse;
+                }
+                else
+                {
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", new UserScheduleSearchOutputDTO()
+                    {
+                        UserSchedulesId = pUserSchedule.SchedulesId,
+                        UserId = pUserSchedule.UserId,
+                        SchedulesId = pUserSchedule.SchedulesId
+                    });
+                    _logger.LogWarning("---- ERROR EN METODO POST USERSCHEDULE API CONTROLLER ----");
+                    return pDTOGenResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("--- ERROR : " + ex.Message + " ----");
+                var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new UserScheduleSearchOutputDTO()
+                {
+                    UserSchedulesId = pUserSchedule.SchedulesId,
+                    UserId = pUserSchedule.UserId,
+                    SchedulesId = pUserSchedule.SchedulesId
+                });
+                return DTOGenRes;
+            }
         }
 
         // DELETE api/<UserScheduleController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{Id}")]
+        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Delete(int Id)
         {
+            try
+            {
+                _logger.LogInformation("---- INICIO METODO DELETE USERSCHEDULE API CONTROLLER ----");
+
+                var userSchedule = await _userScheduleBL.Delete(Id);
+                if (userSchedule > 0)
+                {
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Eliminacion correcta", null);
+                    _logger.LogInformation("---- FIN METODO DELETE USERSCHEDULE API CONTROLLER ----");
+                    return pDTOGenResponse;
+                }
+                else
+                {
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", null);
+                    _logger.LogWarning("---- ERROR EN METODO DELETE USERSCHEDULE API CONTROLLER ----");
+                    return pDTOGenResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("--- ERROR : " + ex.Message + " ----");
+                var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, null);
+                return DTOGenRes;
+            }
         }
     }
 }
