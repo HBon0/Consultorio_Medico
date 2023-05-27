@@ -36,7 +36,7 @@
                 </option>
                 @foreach (var item in Specialties)
                 {
-                    <option value=@item.Id>@item.Specialties</option>
+                    <option value=@item.Id>@item.Specialty</option>
                 }
             </select>
             <span asp-validation-for="SpecialtieId" class="text-danger"></span>
