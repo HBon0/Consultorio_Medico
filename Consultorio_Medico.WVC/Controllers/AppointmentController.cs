@@ -13,12 +13,13 @@ namespace Consultorio_Medico.MVC.Controllers
         private readonly ISpecialtieBL _specialtieBL;
         private readonly IPatientBL _patientBL;
         private readonly ILogger<AppointmentController> _logger;
-        public AppointmentController (IAppointmentBL appointmentBL, IUserBL userBL, ISpecialtieBL specialtieBL, IPatientBL petientBL)
+        public AppointmentController (IAppointmentBL appointmentBL, IUserBL userBL, ISpecialtieBL specialtieBL, IPatientBL petientBL, ILogger<AppointmentController> logger)
         {
             _appointmentBL = appointmentBL;
             _userBL = userBL;
             _specialtieBL = specialtieBL;
             _patientBL = petientBL;
+            _logger = logger;
         }
         // GET: AppointmentController
         public async Task<ActionResult> Index(AppointmentSearchInputDTO pAppoinment)
