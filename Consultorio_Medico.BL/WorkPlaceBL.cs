@@ -42,13 +42,19 @@ namespace Consultorio_Medico.BL
 
         public async  Task<int> Create(WorkPlaceInputDTO pWork)
         {
-            WorkPlace WorkEN = new WorkPlace()
-            {
-                WorkPlaces=pWork.WorkPlaces,
+            string ApiUrl = GetUrlAPI();
 
-            };
-            _WorkPlaceDAL.Create(WorkEN);
-            return await _unitOfWork.SaveChangesAsync();
+            string JsonWorkPlace = JsonSerializer.Serialize(pWork);
+            StringContent content = new StringContent(JsonWorkPlace, Encoding.UTF8, "application/json");
+
+            var HttpResponse = await client.PostAsync(ApiUrl, content);
+            if (HttpResponse.IsSuccessStatusCode)
+            {
+                var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<WorkPlaceSearchOutPutDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return 1;
+            }
+            return 0;
         }
 
         public async Task<int> Delete(int Id)
