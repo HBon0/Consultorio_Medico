@@ -1,13 +1,17 @@
-﻿using Consultorio_Medico.BL.DTOs.RolDTO;
+﻿
+using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
+using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.DTOs.WorkPlaceDTO;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
 using Consultorio_Medico.Entities.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL
@@ -18,13 +22,24 @@ namespace Consultorio_Medico.BL
         readonly IWorkPlaceDAL _WorkPlaceDAL;
         readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<WorkPlaceBL> _logger;
+        private readonly IConfiguration _configuration;
+        HttpClient client = new HttpClient();
 
-        public WorkPlaceBL(IWorkPlaceDAL workPlaceDAL, IUnitOfWork unitOfWork, ILogger<WorkPlaceBL> logger)
+        public WorkPlaceBL(IWorkPlaceDAL workPlaceDAL, IUnitOfWork unitOfWork, ILogger<WorkPlaceBL> logger, IConfiguration config)
         {
             _WorkPlaceDAL = workPlaceDAL;
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _configuration = config;
         }
+
+        public string GetUrlAPI ()
+        {
+            string ApiUrlBase = _configuration.GetValue<string>("ApiConnectionString");
+            ApiUrlBase += "WorkPlace";
+            return ApiUrlBase;
+        }
+
         public async  Task<int> Create(WorkPlaceInputDTO pWork)
         {
             WorkPlace WorkEN = new WorkPlace()
@@ -50,17 +65,25 @@ namespace Consultorio_Medico.BL
 
         public async Task<WorkPlaceSearchOutPutDTO> GetById(int Id)
         {
-
-            WorkPlace WorkEN = await _WorkPlaceDAL.GetById(Id);
-            return new WorkPlaceSearchOutPutDTO()
+            try
             {
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase + $"/{Id}");
 
-                WorkPlacesId = WorkEN.WorkPlacesId,
-                WorkPlaces = WorkEN.WorkPlaces,
-            };
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<WorkPlaceSearchOutPutDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Workplaces.Data;
+                }
+                return new WorkPlaceSearchOutPutDTO();
+            }
+            catch (Exception e)
+            {
+                return new WorkPlaceSearchOutPutDTO();
+            }
         }
     
-
         public async  Task<List<WorkPlaceSearchOutPutDTO>> Search(WokplaceSearchInputDTO pWork)
         {
             _logger.LogInformation("--------------- INICIO DE METODO SEARCH WORKPLACE -----------------------");
