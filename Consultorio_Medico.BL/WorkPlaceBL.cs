@@ -42,31 +42,48 @@ namespace Consultorio_Medico.BL
 
         public async  Task<int> Create(WorkPlaceInputDTO pWork)
         {
-            string ApiUrl = GetUrlAPI();
-
-            string JsonWorkPlace = JsonSerializer.Serialize(pWork);
-            StringContent content = new StringContent(JsonWorkPlace, Encoding.UTF8, "application/json");
-
-            var HttpResponse = await client.PostAsync(ApiUrl, content);
-            if (HttpResponse.IsSuccessStatusCode)
+            try
             {
-                var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
-                var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<WorkPlaceSearchOutPutDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-                return 1;
+                string ApiUrl = GetUrlAPI();
+
+                string JsonWorkPlace = JsonSerializer.Serialize(pWork);
+                StringContent content = new StringContent(JsonWorkPlace, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PostAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<WorkPlaceSearchOutPutDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
+                return 0;
             }
-            return 0;
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
         public async Task<int> Delete(int Id)
         {
-            WorkPlace WorkEN = await _WorkPlaceDAL.GetById(Id);
-            if (WorkEN.WorkPlacesId == Id)
+            try
             {
-                _WorkPlaceDAL.Delete(WorkEN);
-                return await _unitOfWork.SaveChangesAsync();
-            }
-            else
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.DeleteAsync(ApiUrlBase + $"/{Id}");
+
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<WorkPlaceSearchOutPutDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
                 return 0;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
 
         public async Task<WorkPlaceSearchOutPutDTO> GetById(int Id)
@@ -108,16 +125,28 @@ namespace Consultorio_Medico.BL
 
         public async Task<int> Update(WorkPlaceInputDTO pWork)
         {
-            WorkPlace WorkEN = await _WorkPlaceDAL.GetById(pWork.WorkPlacesId);
-            if (WorkEN.WorkPlacesId == pWork.WorkPlacesId)
+            try
             {
-                WorkEN.WorkPlaces = pWork.WorkPlaces;
-                
-                _WorkPlaceDAL.Update(WorkEN);
-                return await _unitOfWork.SaveChangesAsync();
+                string ApiUrl = GetUrlAPI();
+                ApiUrl += "/" + pWork.WorkPlacesId;
 
+                string JsonWorkPlace = JsonSerializer.Serialize(pWork);
+                StringContent content = new StringContent(JsonWorkPlace, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PutAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<WorkPlaceSearchOutPutDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
+                return 0;
             }
-            else return 0;
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
     }
 }
