@@ -18,17 +18,12 @@ namespace Consultorio_Medico.BL
 {
     public class WorkPlaceBL : IWorkPlaceBL
     {
-
-        readonly IWorkPlaceDAL _WorkPlaceDAL;
-        readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<WorkPlaceBL> _logger;
         private readonly IConfiguration _configuration;
         HttpClient client = new HttpClient();
 
-        public WorkPlaceBL(IWorkPlaceDAL workPlaceDAL, IUnitOfWork unitOfWork, ILogger<WorkPlaceBL> logger, IConfiguration config)
+        public WorkPlaceBL(ILogger<WorkPlaceBL> logger, IConfiguration config)
         {
-            _WorkPlaceDAL = workPlaceDAL;
-            _unitOfWork = unitOfWork;
             _logger = logger;
             _configuration = config;
         }
