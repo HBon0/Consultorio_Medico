@@ -132,8 +132,8 @@ namespace Consultorio_Medico.MVC.Controllers
             try
             {
                 _logger.LogInformation(" ---------------- INICIO METODO DELETE POST SPECIALTIES CONTROLLER ----------------");
-                if (!ModelState.IsValid)
-                    return View(pSpecialtie);
+                //if (!ModelState.IsValid)
+                //    return View(pSpecialtie);
 
                 int result = await _specialtieBL.Delete(Id);
                 if (result != 0) {
