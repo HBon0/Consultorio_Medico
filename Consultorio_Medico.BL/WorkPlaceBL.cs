@@ -109,18 +109,23 @@ namespace Consultorio_Medico.BL
     
         public async  Task<List<WorkPlaceSearchOutPutDTO>> Search(WokplaceSearchInputDTO pWork)
         {
-            _logger.LogInformation("--------------- INICIO DE METODO SEARCH WORKPLACE -----------------------");
-            List<WorkPlace> WorkP = await _WorkPlaceDAL.Search(new WorkPlace { WorkPlaces = pWork.WorkPlaces, WorkPlacesId = pWork.WorkplacesId });
-            List<WorkPlaceSearchOutPutDTO> list = new List<WorkPlaceSearchOutPutDTO>();
-            WorkP.ForEach(s => list.Add(new WorkPlaceSearchOutPutDTO
+            try
             {
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase);
 
-                WorkPlacesId=s.WorkPlacesId,
-                WorkPlaces = s.WorkPlaces,
-              
-
-            }));
-            return list;
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<List<WorkPlaceSearchOutPutDTO>>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Workplaces.Data;
+                }
+                return new List<WorkPlaceSearchOutPutDTO>();
+            }
+            catch (Exception e)
+            {
+                return new List<WorkPlaceSearchOutPutDTO>();
+            }
         }
 
         public async Task<int> Update(WorkPlaceInputDTO pWork)
