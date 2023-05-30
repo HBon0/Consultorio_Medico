@@ -1,45 +1,58 @@
-﻿using Consultorio_Medico.BL.DTOs.PatientDTO;
+﻿using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
+using Consultorio_Medico.BL.DTOs.PatientDTO;
 using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
 using Consultorio_Medico.Entities.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL
 {
     public class PatientBL : IPatientBL
     {
-        private readonly IPatientDAL _patient;
-        private readonly IUnitOfWork _unitOfWork;
-        public PatientBL(IPatientDAL patient, IUnitOfWork unitOfWork)
+        private readonly IConfiguration _configuration;
+        HttpClient client = new HttpClient();
+        public PatientBL(IConfiguration config)
         {
-            _patient = patient;
-            _unitOfWork = unitOfWork;
+            _configuration = config;
+        }
+        public string GetUrlAPI()
+        {
+            string ApiUrlBase = _configuration.GetValue<string>("ApiConnectionString");
+            ApiUrlBase += "Patient";
+            return ApiUrlBase;
         }
 
         public async Task<int> Create(patientAddDTO pPatient)
         {
             try
             {
-                Patient patientEN = new Patient()
+                string ApiUrl = GetUrlAPI();
+
+                string JsonPatient = JsonSerializer.Serialize(pPatient);
+                StringContent content = new StringContent(JsonPatient, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PostAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
                 {
-                    Name = pPatient.Name,
-                    LastName = pPatient.LastName,
-                    Telefono = pPatient.Telefono,
-                    DUI = pPatient.DUI,
-                };
-                _patient.Create(patientEN);
-                return await _unitOfWork.SaveChangesAsync();
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Patients = JsonSerializer.Deserialize<DTOGenericResponse<patientSearchOutputDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
+                return 0;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                return 0;
             }
         }
 
@@ -47,11 +60,14 @@ namespace Consultorio_Medico.BL
         {
             try
             {
-                Patient patient = await _patient.GetById(Id);
-                if (patient.PatientId == Id)
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.DeleteAsync(ApiUrlBase + $"/{Id}");
+
+                if (HttpResponse.IsSuccessStatusCode)
                 {
-                    _patient.Delete(patient);
-                    return await _unitOfWork.SaveChangesAsync();
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Patients = JsonSerializer.Deserialize<DTOGenericResponse<patientSearchOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
                 }
                 return 0;
             }
@@ -61,36 +77,20 @@ namespace Consultorio_Medico.BL
             }
         }
 
-        public async Task<List<patientSearchOutputDTO>> GetAll()
-        {
-            List<patientSearchOutputDTO> patientSearchOutput = new List<patientSearchOutputDTO>();
-
-            List<Patient> patient = await _patient.GetAll();
-
-            patient.ForEach(s => patientSearchOutput.Add(new patientSearchOutputDTO
-            {
-                patientId = s.PatientId,    
-                Name = s.Name,
-                Telefono= s.Telefono,
-                DUI= s.DUI,
-
-            }));
-            return patientSearchOutput;
-        }
-
         public async Task<patientSearchOutputDTO> GetById(int Id)
         {
             try
             {
-                Patient patient = await _patient.GetById(Id);
-                return new patientSearchOutputDTO()
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase + $"/{Id}");
+
+                if (HttpResponse.IsSuccessStatusCode)
                 {
-                    patientId = patient.PatientId,
-                    Name = patient.Name,
-                    LastName = patient.LastName,
-                    Telefono= patient.Telefono,
-                    DUI= patient.DUI,
-                };
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Patients = JsonSerializer.Deserialize<DTOGenericResponse<patientSearchOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Patients.Data;
+                }
+                return new patientSearchOutputDTO();
             }
             catch (Exception e)
             {
@@ -100,17 +100,23 @@ namespace Consultorio_Medico.BL
 
         public async Task<List<patientSearchOutputDTO>> Search(patientSearchInputDTO pPatient)
         {
-            List<Patient> patient = await _patient.Search(new Patient { PatientId = pPatient.patientId });
-            List<patientSearchOutputDTO> list = new List<patientSearchOutputDTO>();
-            patient.ForEach(s => list.Add(new patientSearchOutputDTO
+            try
             {
-                patientId=s.PatientId,
-                Name=s.Name,
-                LastName=s.LastName,
-                Telefono = s.Telefono,
-                DUI = s.DUI,
-            }));
-            return list;
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase);
+
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Patients = JsonSerializer.Deserialize<DTOGenericResponse<List<patientSearchOutputDTO>>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Patients.Data;
+                }
+                return new List<patientSearchOutputDTO>();
+            }
+            catch (Exception e)
+            {
+                return new List<patientSearchOutputDTO>();
+            }
 
         }
 
@@ -118,22 +124,25 @@ namespace Consultorio_Medico.BL
         {
             try
             {
-                Patient patient = await _patient.GetById(pPatient.patientId);
-                if (patient.PatientId == pPatient.patientId)
-                {
-                    patient.Name = pPatient.Name;
-                    patient.LastName = pPatient.LastName;   
-                    patient.Telefono = pPatient.Telefono;   
-                    patient.DUI = pPatient.DUI; 
+                string ApiUrl = GetUrlAPI();
+                ApiUrl += "/" + pPatient.patientId;
 
-                    _patient.Update(patient);
-                    return await _unitOfWork.SaveChangesAsync();
+                string JsonAppointment = JsonSerializer.Serialize(pPatient);
+                StringContent content = new StringContent(JsonAppointment, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PutAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Appointments = JsonSerializer.Deserialize<DTOGenericResponse<patientSearchOutputDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
                 }
-                else return 0;
+                return 0;
             }
             catch (Exception e)
             {
-                return 0;
+
+                throw;
             }
         }
     }
