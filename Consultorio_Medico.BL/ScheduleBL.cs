@@ -1,102 +1,159 @@
-﻿using Consultorio_Medico.BL.DTOs.ScheduleDTO;
+﻿using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
+using Consultorio_Medico.BL.DTOs.RolDTO;
+using Consultorio_Medico.BL.DTOs.ScheduleDTO;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
 using Consultorio_Medico.Entities.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL
 {
-    public class ScheduleBL:IScheduleBL
+    public class ScheduleBL : IScheduleBL
     {
         private readonly IScheduleDAL _scheduleDAL;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
+        HttpClient client = new HttpClient();
 
-        public ScheduleBL(IScheduleDAL ScheduleDAL, IUnitOfWork unitOfWork)
+        public ScheduleBL(IScheduleDAL ScheduleDAL, IUnitOfWork unitOfWork, IConfiguration config)
         {
             _scheduleDAL = ScheduleDAL;
             _unitOfWork = unitOfWork;
+            _configuration = config;
+        }
+        public string GetUrlAPI()
+        {
+            string ApiUrlBase = _configuration.GetValue<string>("ApiConnectionString");
+            ApiUrlBase += "Schedules";
+            return ApiUrlBase;
         }
 
         public async Task<int> Create(ScheduleInputDTO Schedule)
         {
-            Schedules schedules = new Schedules()
+            try
             {
-                DayName = Schedule.DayName,
-                StartOfShift = Schedule.StartOfShift,
-                EndOfShift = Schedule.EndOfShift,
-                                         
-            };
-            _scheduleDAL.Create(schedules);
-            return await _unitOfWork.SaveChangesAsync();
+                string ApiUrl = GetUrlAPI();
+
+                string JsonSchedule = JsonSerializer.Serialize(Schedule);
+                StringContent content = new StringContent(JsonSchedule, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PostAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Schedules = JsonSerializer.Deserialize<DTOGenericResponse<ScheduleSearchOutPutDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
+                return 0;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
         public async Task<int> Delete(int Id)
         {
-            Schedules SchedEN = await _scheduleDAL.GetById(Id);
-            if (SchedEN.SchedulesId == Id)
+            try
             {
-                _scheduleDAL.Delete(SchedEN);
-                return await _unitOfWork.SaveChangesAsync();
-            }
-            else
-                return 0;
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.DeleteAsync(ApiUrlBase + $"/{Id}");
 
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Schedules = JsonSerializer.Deserialize<DTOGenericResponse<ScheduleSearchOutPutDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
 
         }
 
         public async Task<ScheduleSearchOutPutDTO> GetById(int Id)
         {
-          Schedules schedEN = await _scheduleDAL.GetById(Id);
-            return new ScheduleSearchOutPutDTO()
+            try
             {
-               SchedulesId= schedEN.SchedulesId,
-               DayName= schedEN.DayName,
-                StartOfShift = schedEN.StartOfShift,
-               EndOfShift= schedEN.EndOfShift,  
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase + $"/{Id}");
 
-            };
-
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Schedule = JsonSerializer.Deserialize<DTOGenericResponse<ScheduleSearchOutPutDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Schedule.Data;
+                }
+                return new ScheduleSearchOutPutDTO();
+            }
+            catch (Exception e)
+            {
+                return new ScheduleSearchOutPutDTO();
+            }
         }
 
         public async Task<List<ScheduleSearchOutPutDTO>> Search(ScheduleSearchInputDTO Schedule)
         {
-            List<Schedules> schedules = await _scheduleDAL.Search(new Schedules { DayName = Schedule.DayNameLike, StartOfShift = Schedule.StartShiftLike, EndOfShift = Schedule.EndOfShiftLike });
-            List<ScheduleSearchOutPutDTO> list = new List<ScheduleSearchOutPutDTO>();
-            schedules.ForEach(s => list.Add(new ScheduleSearchOutPutDTO
+            try
             {
-                SchedulesId=s.SchedulesId,
-                DayName=s.DayName,
-                StartOfShift = s.StartOfShift,
-                EndOfShift = s.EndOfShift,
-            }));
-            return list;
-        
-    }
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase);
 
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Schedules = JsonSerializer.Deserialize<DTOGenericResponse<List<ScheduleSearchOutPutDTO>>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Schedules.Data;
+                }
+                return new List<ScheduleSearchOutPutDTO>();
+            }
+            catch (Exception e)
+            {
+                return new List<ScheduleSearchOutPutDTO>();
+            }
 
+        }
 
         public async Task<int> Update(ScheduleInputDTO Schedule)
         {
-            Schedules schedEN = await _scheduleDAL.GetById(Schedule.SchedulesId);
-            if (schedEN.SchedulesId == Schedule.SchedulesId)
+            try
             {
-                schedEN.SchedulesId = Schedule.SchedulesId;
-                schedEN.DayName = Schedule.DayName;
-                schedEN.StartOfShift = Schedule.StartOfShift;
-                schedEN.EndOfShift = Schedule.EndOfShift;
-                return await _unitOfWork.SaveChangesAsync();
+                string ApiUrl = GetUrlAPI();
+                ApiUrl += "/" + Schedule.SchedulesId;
 
-            }
-            else
+                string JsonSchedule = JsonSerializer.Serialize(Schedule);
+                StringContent content = new StringContent(JsonSchedule, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PutAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Schedules = JsonSerializer.Deserialize<DTOGenericResponse<ScheduleSearchOutPutDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
                 return 0;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
-      
+
+
+
     }
 }
