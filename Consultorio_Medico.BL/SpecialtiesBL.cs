@@ -16,15 +16,11 @@ namespace Consultorio_Medico.BL
 {
     public class SpecialtiesBL : ISpecialtieBL
     {
-        private readonly ISpecialtiesDAL _specialties;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _Configuration;
         HttpClient client = new HttpClient();
 
-        public SpecialtiesBL (ISpecialtiesDAL specialties, IUnitOfWork unitOfWork, IConfiguration config)
+        public SpecialtiesBL (IConfiguration config)
         {
-            _specialties = specialties;
-            _unitOfWork = unitOfWork;
             _Configuration = config;
         }
         public string GetUrlAPI()
@@ -148,18 +144,5 @@ namespace Consultorio_Medico.BL
             }
         }
 
-        public async Task<List<SpecialtiesOutputDTO>> GetAll ()
-        {
-            List<SpecialtiesOutputDTO> specialtiesOutputDTOs = new List<SpecialtiesOutputDTO>();
-
-            List<Specialties> specialties = await _specialties.GetAll();
-
-            specialties.ForEach(s => specialtiesOutputDTOs.Add(new SpecialtiesOutputDTO
-            {
-                Id= s.SpecialtiesId,
-                Specialty = s.Specialty
-            }));
-            return specialtiesOutputDTOs;
-        }
     }
 }

@@ -14,7 +14,6 @@ namespace Consultorio_Medico.BL.Interfaces
         Task<int> Update(AppointmentInputDTO pAppointment);
         Task<int> Delete(int Id);
         Task<AppointmentSearchOutputDTO> GetById(int Id);
-        Task<List<AppointmentSearchOutputDTO>> GetAll();
         Task<List<AppointmentSearchOutputDTO>> Search(AppointmentSearchInputDTO pAppointmentSearch);
     }
 }

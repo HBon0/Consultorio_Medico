@@ -14,6 +14,5 @@ namespace Consultorio_Medico.BL.Interfaces
         Task<int> Delete(int Id);
         Task<SpecialtiesOutputDTO> GetById(int Id);
         Task<List<SpecialtiesOutputDTO>> Search(SpecialtiesInputDTO pSpecialties);
-        Task<List<SpecialtiesOutputDTO>> GetAll();
     }
 }

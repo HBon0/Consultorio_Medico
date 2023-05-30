@@ -1,4 +1,6 @@
 ﻿using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+using Consultorio_Medico.BL.DTOs.PatientDTO;
+using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -52,9 +54,11 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             _logger.LogInformation("------------ INICIO METODO DETAILS APPOINTMENT CONTROLLER ---------");
             userSearchInputDTO user = new userSearchInputDTO();
+            SpecialtiesInputDTO specialtie = new SpecialtiesInputDTO();
+            patientSearchInputDTO patient = new patientSearchInputDTO();
             var Users = await _userBL.Search(user);
-            var Specialties = await _specialtieBL.GetAll();
-            var Patients = await _patientBL.GetAll();
+            var Specialties = await _specialtieBL.Search(specialtie);
+            var Patients = await _patientBL.Search(patient);
 
             ViewBag.Users = Users;
             ViewBag.Specialties = Specialties;
@@ -69,9 +73,11 @@ namespace Consultorio_Medico.MVC.Controllers
         public async Task<ActionResult> Create()
         {
             userSearchInputDTO user = new userSearchInputDTO();
+            SpecialtiesInputDTO specialtie = new SpecialtiesInputDTO();
+            patientSearchInputDTO patient = new patientSearchInputDTO();
             var Users = await _userBL.Search(user);
-            var Specialties = await _specialtieBL.GetAll();
-            var Patients = await _patientBL.GetAll();
+            var Specialties = await _specialtieBL.Search(specialtie);
+            var Patients = await _patientBL.Search(patient);
 
             ViewBag.Users = Users;
             ViewBag.Specialties = Specialties;
@@ -114,9 +120,11 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             _logger.LogInformation("---------- INICIO METODO EDIT GET APPOINTMENT CONTROLLER ----------");
             userSearchInputDTO user = new userSearchInputDTO();
+            SpecialtiesInputDTO specialtie = new SpecialtiesInputDTO();
+            patientSearchInputDTO patient = new patientSearchInputDTO();
             var Users = await _userBL.Search(user);
-            var Specialties = await _specialtieBL.GetAll();
-            var Patients = await _patientBL.GetAll();
+            var Specialties = await _specialtieBL.Search(specialtie);
+            var Patients = await _patientBL.Search(patient);
 
             ViewBag.Users = Users;
             ViewBag.Specialties = Specialties;
@@ -178,9 +186,11 @@ namespace Consultorio_Medico.MVC.Controllers
         {
             _logger.LogInformation("----- INICIO METODO DELETE GET APPOINTMENT CONTROLLER ---------");
             userSearchInputDTO user = new userSearchInputDTO();
+            SpecialtiesInputDTO specialtie = new SpecialtiesInputDTO();
+            patientSearchInputDTO patient = new patientSearchInputDTO();
             var Users = await _userBL.Search(user);
-            var Specialties = await _specialtieBL.GetAll();
-            var Patients = await _patientBL.GetAll();
+            var Specialties = await _specialtieBL.Search(specialtie);
+            var Patients = await _patientBL.Search(patient);
 
             ViewBag.Users = Users;
             ViewBag.Specialties = Specialties;

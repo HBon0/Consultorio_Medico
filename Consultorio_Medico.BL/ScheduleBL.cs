@@ -18,15 +18,11 @@ namespace Consultorio_Medico.BL
 {
     public class ScheduleBL : IScheduleBL
     {
-        private readonly IScheduleDAL _scheduleDAL;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         HttpClient client = new HttpClient();
 
-        public ScheduleBL(IScheduleDAL ScheduleDAL, IUnitOfWork unitOfWork, IConfiguration config)
+        public ScheduleBL(IConfiguration config)
         {
-            _scheduleDAL = ScheduleDAL;
-            _unitOfWork = unitOfWork;
             _configuration = config;
         }
         public string GetUrlAPI()
