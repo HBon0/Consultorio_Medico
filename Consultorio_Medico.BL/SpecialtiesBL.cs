@@ -40,8 +40,8 @@ namespace Consultorio_Medico.BL
             {
                 string ApiUrl = GetUrlAPI();
 
-                string JsonSpecialy = JsonSerializer.Serialize(pSpecialties);
-                StringContent content = new StringContent(JsonSpecialy, Encoding.UTF8, "application/json");
+                string JsonSpecialty = JsonSerializer.Serialize(pSpecialties);
+                StringContent content = new StringContent(JsonSpecialty, Encoding.UTF8, "application/json");
 
                 var HttpResponse = await client.PostAsync(ApiUrl, content);
                 if (HttpResponse.IsSuccessStatusCode)
@@ -66,14 +66,14 @@ namespace Consultorio_Medico.BL
                 string ApiUrl = GetUrlAPI();
                 ApiUrl += "/" + pSpecialties.Id;
 
-                string JsonSpecialy = JsonSerializer.Serialize(pSpecialties);
-                StringContent content = new StringContent(JsonSpecialy, Encoding.UTF8, "application/json");
+                string JsonSpecialty = JsonSerializer.Serialize(pSpecialties);
+                StringContent content = new StringContent(JsonSpecialty, Encoding.UTF8, "application/json");
 
                 var HttpResponse = await client.PutAsync(ApiUrl, content);
                 if (HttpResponse.IsSuccessStatusCode)
                 {
                     var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
-                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<SpecialtiesOutputDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    var Specialties = JsonSerializer.Deserialize<DTOGenericResponse<SpecialtiesOutputDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                     return 1;
                 }
                 return 0;
@@ -95,7 +95,7 @@ namespace Consultorio_Medico.BL
                 if (HttpResponse.IsSuccessStatusCode)
                 {
                     var content = await HttpResponse.Content.ReadAsStringAsync();
-                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<SpecialtiesOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    var Specialties = JsonSerializer.Deserialize<DTOGenericResponse<SpecialtiesOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                     return 1;
                 }
                 return 0;
@@ -116,8 +116,8 @@ namespace Consultorio_Medico.BL
                 if (HttpResponse.IsSuccessStatusCode)
                 {
                     var content = await HttpResponse.Content.ReadAsStringAsync();
-                    var Workplaces = JsonSerializer.Deserialize<DTOGenericResponse<SpecialtiesOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-                    return Workplaces.Data;
+                    var Specialties = JsonSerializer.Deserialize<DTOGenericResponse<SpecialtiesOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Specialties.Data;
                 }
                 return new SpecialtiesOutputDTO();
             }

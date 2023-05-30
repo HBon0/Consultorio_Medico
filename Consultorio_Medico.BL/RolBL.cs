@@ -12,89 +12,142 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Consultorio_Medico.BL.DTOs.DTOs;
-
-
+using Microsoft.Extensions.Configuration;
+using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
+using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
+using System.Text.Json;
 
 namespace Consultorio_Medico.BL
 {
     public class RolBL : IRolBL
-
     {
-        readonly IRolDAL _rolDAL;
-        readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
+        HttpClient client = new HttpClient();
 
-        public RolBL(IRolDAL rolDAL, IUnitOfWork unitOfWork)
+        public RolBL(IConfiguration config)
         {
-            _rolDAL = rolDAL;
-            _unitOfWork = unitOfWork;
+            _configuration = config;
         }
-
+        public string GetUrlAPI()
+        {
+            string ApiUrlBase = _configuration.GetValue<string>("ApiConnectionString");
+            ApiUrlBase += "Rol";
+            return ApiUrlBase;
+        }
 
         public async Task<int> Create(RolInputDTO pRol)
         {
-            Rol rolEN = new Rol()
+            try
             {
-                Name = pRol.Name,
-                Status = pRol.Status,
-            };
-            _rolDAL.Create(rolEN);
-            return await _unitOfWork.SaveChangesAsync();
+                string ApiUrl = GetUrlAPI();
+
+                string JsonRol = JsonSerializer.Serialize(pRol);
+                StringContent content = new StringContent(JsonRol, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PostAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Roles = JsonSerializer.Deserialize<DTOGenericResponse<RolSearchingOutputDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
+                return 0;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
         public async Task<int> Delete(int Id)
         {
-            Rol rolEN = await _rolDAL.GetById(Id);
-            if (rolEN.RolId == Id)
+            try
             {
-                _rolDAL.Delete(rolEN);
-                return await _unitOfWork.SaveChangesAsync();
-            }
-            else
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.DeleteAsync(ApiUrlBase + $"/{Id}");
+
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Roles = JsonSerializer.Deserialize<DTOGenericResponse<RolSearchingOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
                 return 0;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
 
         public async Task<List<RolSearchingOutputDTO>> Search(RolSearchingInputDTO pRol)
         {
-            List<Rol> Rol = await _rolDAL.Search(new Rol { RolId = pRol.RolIdLike, Name = pRol.NameLike });
-            List<RolSearchingOutputDTO> list = new List<RolSearchingOutputDTO>();
-            Rol.ForEach(s => list.Add(new RolSearchingOutputDTO
+            try
             {
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase);
 
-                RolId = s.RolId,
-                Name = s.Name,
-                Status = s.Status,
-
-            }));
-            return list;
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Roles = JsonSerializer.Deserialize<DTOGenericResponse<List<RolSearchingOutputDTO>>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Roles.Data;
+                }
+                return new List<RolSearchingOutputDTO>();
+            }
+            catch (Exception e)
+            {
+                return new List<RolSearchingOutputDTO>();
+            }
 
         }
 
         public async Task<int> Update(RolInputDTO pRol)
         {
-            Rol rol = await _rolDAL.GetById(pRol.RolId);
-            if (rol.RolId == pRol.RolId)
+            try
+            {
+                string ApiUrl = GetUrlAPI();
+                ApiUrl += "/" + pRol.RolId;
+
+                string JsonRoles = JsonSerializer.Serialize(pRol);
+                StringContent content = new StringContent(JsonRoles, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PutAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Roles = JsonSerializer.Deserialize<DTOGenericResponse<RolSearchingOutputDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
+                }
+                return 0;
+            }
+            catch (Exception e)
             {
 
-                rol.RolId = pRol.RolId;
-                rol.Name = pRol.Name;
-                rol.Status = pRol.Status;
-                _rolDAL.Update(rol);
-                return await _unitOfWork.SaveChangesAsync();
-
+                throw;
             }
-            else return 0;
         }
 
         public async Task<RolSearchingOutputDTO> GetById(int Id)
         {
-            Rol rolEN = await _rolDAL.GetById(Id);
-            return new RolSearchingOutputDTO()
+            try
             {
+                string ApiUrlBase = GetUrlAPI();
+                var HttpResponse = await client.GetAsync(ApiUrlBase + $"/{Id}");
 
-                RolId = rolEN.RolId,
-                Name=rolEN.Name,
-                Status = rolEN.Status,
-            };
+                if (HttpResponse.IsSuccessStatusCode)
+                {
+                    var content = await HttpResponse.Content.ReadAsStringAsync();
+                    var Rol = JsonSerializer.Deserialize<DTOGenericResponse<RolSearchingOutputDTO>>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return Rol.Data;
+                }
+                return new RolSearchingOutputDTO();
+            }
+            catch (Exception e)
+            {
+                return new RolSearchingOutputDTO();
+            }
         }
     }
 }
