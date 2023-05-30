@@ -3,6 +3,7 @@ using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.DTOs;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.DTOs.UserSchedule;
+using Consultorio_Medico.BL.DTOs.WorkPlaceDTO;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
 using Consultorio_Medico.Entities.Interfaces;
@@ -19,20 +20,11 @@ namespace Consultorio_Medico.BL
 {
     public class UserBL : IUserBL
     {
-        private readonly IUserDAL _userDAL;
-        private readonly IDoctorSpecialtiesBL _doctorSpecialties;
-        private readonly ISecurityDAL _securityDAL;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         HttpClient client = new HttpClient();
 
-        public UserBL(IUserDAL userDAL, IUnitOfWork unitOfWork, ISecurityDAL security, IDoctorSpecialtiesBL doctorSpecialties, IConfiguration config)
+        public UserBL(IConfiguration config)
         {
-
-            _securityDAL = security;
-            _userDAL = userDAL;
-            _doctorSpecialties = doctorSpecialties;
-            _unitOfWork = unitOfWork;
             _configuration = config;
         }
         public string GetUrlAPI()
@@ -44,6 +36,12 @@ namespace Consultorio_Medico.BL
 
         public async Task<int> Create(UserAddDTO pUser)
         {
+            #region BorrarLuego
+
+            pUser.UserSchedules = new List<UserScheduleSearchInpuntDTO>();
+            pUser.DoctorSpecialtie = new List<DoctorSpecialtiesInputDTO>(); 
+            #endregion
+
             try
             {
                 string ApiUrl = GetUrlAPI();
@@ -136,29 +134,20 @@ namespace Consultorio_Medico.BL
         {
             try
             {
-                Users UserEn = await _userDAL.GetById(pUser.UserId);
-                if (UserEn.UserId == pUser.UserId)
+                string ApiUrl = GetUrlAPI();
+                ApiUrl += "/" + pUser.UserId;
+
+                string JsonUser = JsonSerializer.Serialize(pUser);
+                StringContent content = new StringContent(JsonUser, Encoding.UTF8, "application/json");
+
+                var HttpResponse = await client.PutAsync(ApiUrl, content);
+                if (HttpResponse.IsSuccessStatusCode)
                 {
-                    UserEn.UserId = pUser.UserId;
-                    UserEn.RolId = pUser.RolId ;
-                    UserEn.WorkplaceId = pUser.WorkplaceId;
-                    UserEn.Name = pUser.Name;
-                    UserEn.LastName = pUser.LastName;
-                    UserEn.PhoneNumber = pUser.PhoneNumber;
-                    UserEn.Dui = pUser.Dui;
-                    UserEn.Email = pUser.Email;
-                    UserEn.Login = pUser.Login;
-                    UserEn.Status = pUser.Status;
-
-                    bool ExistLogin = _securityDAL.ValidateLogin(UserEn);
-                    if (ExistLogin)
-                        throw new ArgumentException("El Login ya existe");
-
-                    _userDAL.Update(UserEn);
-                    return await _unitOfWork.SaveChangesAsync();
-
+                    var contentResponse = await HttpResponse.Content.ReadAsStringAsync();
+                    var Users = JsonSerializer.Deserialize<DTOGenericResponse<userSearchOutputDTO>>(contentResponse, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    return 1;
                 }
-                else return 0;
+                return 0;
             }
             catch (Exception e)
             {
@@ -166,7 +155,7 @@ namespace Consultorio_Medico.BL
                 throw;
             }
 
-         }
+        }
         }
 
 
