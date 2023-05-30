@@ -16,14 +16,10 @@ namespace Consultorio_Medico.BL
 {
     public class AppointmentBL : IAppointmentBL
     {
-        private readonly IAppointmentDAL _appointment;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         HttpClient client = new HttpClient();
-        public AppointmentBL (IUnitOfWork unitOfWork, IAppointmentDAL appointment, IConfiguration config)
+        public AppointmentBL (IConfiguration config)
         {
-            _appointment = appointment;
-            _unitOfWork = unitOfWork;
             _configuration = config;
         }
         public string GetUrlAPI()
