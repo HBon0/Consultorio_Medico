@@ -182,13 +182,13 @@ namespace Consultorio_Medico.MVC.Controllers
         // POST: UserScheduleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int Id, userSearchOutputDTO pUserSchedule)
+        public async Task<ActionResult> Delete(int Id, UserScheduleSearchOutputDTO pUserSchedule)
         {
             try
             {
                 _logger.LogInformation("---- INICIO METODO DELETE POST USER SCHEDULE CONTROLLER ----");
-                if (!ModelState.IsValid)
-                    return View(pUserSchedule);
+                //if (!ModelState.IsValid)
+                //    return View(pUserSchedule);
                 int result = await _userSchedBL.Delete(Id);
 
                 if (result > 0)
