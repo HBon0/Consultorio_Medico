@@ -1,5 +1,4 @@
 ﻿using Consultorio_Medico.BL.DTOs.AppointmentDTO;
-using Consultorio_Medico.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

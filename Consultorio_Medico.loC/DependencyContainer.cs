@@ -1,5 +1,4 @@
 ﻿using Consultorio_Medico.BL;
-using Consultorio_Medico.DAL;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,7 +13,6 @@ namespace Consultorio_Medico.loC
     {
         public static IServiceCollection AddDependecies(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDALDepencies(configuration);
             services.AddBLDependecies();
             return services;
         }

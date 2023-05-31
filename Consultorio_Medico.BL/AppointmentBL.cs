@@ -2,8 +2,6 @@
 using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.ScheduleDTO;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
-using Consultorio_Medico.Entities.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

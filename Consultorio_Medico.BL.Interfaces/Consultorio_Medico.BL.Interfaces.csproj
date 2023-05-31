@@ -7,12 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Consultorio_Medico.BL.DTOs\Consultorio_Medico.BL.DTOs.csproj" />
-    <ProjectReference Include="..\Consultorio_Medico.Entities\Consultorio_Medico.Entities.csproj" />
   </ItemGroup>
 
 </Project>

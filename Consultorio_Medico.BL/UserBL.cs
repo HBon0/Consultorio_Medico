@@ -5,8 +5,6 @@ using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.DTOs.UserSchedule;
 using Consultorio_Medico.BL.DTOs.WorkPlaceDTO;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
-using Consultorio_Medico.Entities.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

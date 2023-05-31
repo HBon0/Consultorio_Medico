@@ -3,8 +3,6 @@
 using Consultorio_Medico.BL.DTOs.RolDTO;
 
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
-using Consultorio_Medico.Entities.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

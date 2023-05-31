@@ -3,8 +3,6 @@ using Consultorio_Medico.BL.DTOs.PatientDTO;
 using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
-using Consultorio_Medico.Entities.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

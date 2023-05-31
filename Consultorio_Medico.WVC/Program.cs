@@ -1,7 +1,6 @@
 
 
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.DAL;
 using System.Security.Policy;
 using Consultorio_Medico.loC;
 using Microsoft.AspNetCore.Authentication.Cookies;

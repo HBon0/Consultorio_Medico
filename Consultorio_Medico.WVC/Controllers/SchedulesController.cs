@@ -1,7 +1,6 @@
 ﻿using Consultorio_Medico.BL;
 using Consultorio_Medico.BL.DTOs.ScheduleDTO;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

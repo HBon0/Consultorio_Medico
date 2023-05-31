@@ -4,8 +4,6 @@ using Consultorio_Medico.BL.DTOs.PatientDTO;
 using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
-using Consultorio_Medico.Entities.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

@@ -9,8 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Consultorio_Medico.BL.DTOs\Consultorio_Medico.BL.DTOs.csproj" />
     <ProjectReference Include="..\Consultorio_Medico.BL.Interfaces\Consultorio_Medico.BL.Interfaces.csproj" />
-    <ProjectReference Include="..\Consultorio_Medico.Entities.Interfaces\Consultorio_Medico.Entities.Interfaces.csproj" />
-    <ProjectReference Include="..\Consultorio_Medico.Entities\Consultorio_Medico.Entities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,8 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

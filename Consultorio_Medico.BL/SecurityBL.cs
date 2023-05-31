@@ -8,8 +8,6 @@ using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.DTOs.WorkPlaceDTO;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
-using Consultorio_Medico.Entities.Interfaces;
 using Microsoft.Extensions.Configuration;
 
 namespace Consultorio_Medico.BL
@@ -28,10 +26,6 @@ namespace Consultorio_Medico.BL
             string ApiUrlBase = _configuration.GetValue<string>("ApiConnectionString");
             ApiUrlBase += "Security";
             return ApiUrlBase;
-        }
-        public Users ChangePassword(Users users, string PasswordAnt)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<securityDTO> Login(string Login, string Password)

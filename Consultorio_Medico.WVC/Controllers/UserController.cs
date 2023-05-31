@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Consultorio_Medico.BL;
 using Consultorio_Medico.BL.DTOs.DTOs;
-using Consultorio_Medico.Entities.Interfaces;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.DTOs.WorkPlaceDTO;

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Consultorio_Medico.BL\Consultorio_Medico.BL.csproj" />
-    <ProjectReference Include="..\Consultorio_Medico.DAL\Consultorio_Medico.DAL.csproj" />
   </ItemGroup>
 
 </Project>
