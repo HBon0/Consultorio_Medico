@@ -42,7 +42,7 @@ namespace Consultorio_Medico.MVC.Controllers
             try
             {
                 _logger.LogInformation("---- INICIO METODO LOGIN POST SECURITY CONTROLLER ---------");
-                var pUser = _securityBL.Login(Login, Password);
+                var pUser = await _securityBL.Login(Login, Password);
 
                 //Condiciones que debe cumplir el usuario para tener credenciales correctas.
                 if (pUser != null)
