@@ -14,7 +14,6 @@ namespace Consultorio_Medico.BL
     {
         public static IServiceCollection AddBLDependecies(this IServiceCollection services)
         {
-            services.AddTransient<IClinicBL, ClinicBL>();
             services.AddTransient<IUserBL, UserBL>();
             services.AddTransient<IScheduleBL, ScheduleBL>();
             services.AddTransient<IRolBL, RolBL>();
@@ -22,7 +21,6 @@ namespace Consultorio_Medico.BL
             services.AddTransient<IUserSchedulesBL, UserSchedulesBL>();
             services.AddTransient<ISecurityBL, SecurityBL>();
             services.AddTransient<ISpecialtieBL, SpecialtiesBL>();
-            services.AddTransient<IDoctorSpecialtiesBL, DoctorSpecialtiesBL>();
             services.AddTransient<IPatientBL, PatientBL>();
             services.AddTransient<IAppointmentBL, AppointmentBL>();
             return services;
